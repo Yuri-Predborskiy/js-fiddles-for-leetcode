@@ -1,0 +1,11 @@
+{
+  "name": "js-fiddles-for-leetcode",
+  "version": "1.0.0",
+  "description": "Javascript fiddles for LeetCode algoritmeic problems (randomly picked problems)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yuri Predborski",
+  "license": "ISC"
+}
