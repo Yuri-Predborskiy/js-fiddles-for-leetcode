@@ -85,3 +85,43 @@ nums2 = [3, 4]
 
 The median is (2 + 3)/2 = 2.5
 */
+
+/*
+
+Shorter version
+
+var findMedianSortedArrays = function(nums1, nums2) {
+    let len = (nums1.length + nums2.length - 1) / 2;
+    let range = [0, 1];
+    if (len === 0) {
+        range = [0];
+    } else if (len >= 1) {
+        if (len % 1 === 0 || len === 1) {
+            range = [len];
+        } else {
+            range = [Math.floor(len), Math.ceil(len)];
+        }
+    }
+
+    let left = 0, right = 0, last = 0, res = [];
+    while (range.length) {
+        if (last === range[0]) {
+            if (nums1[left] <= nums2[right] || !nums2[right]) {
+                res.push(nums1[left++]);
+            } else if (nums1[left] > nums2[right] || !nums1[left]) {
+                res.push(nums2[right++]);
+            }
+            range.shift();
+        } else if (nums1[left] <= nums2[right] || right > nums2.length - 1) {
+            left++;
+        } else if (nums1[left] > nums2[right] || left > nums1.length - 1) {
+            right++;
+        }
+        last++;
+        if (last > nums1.length + nums2.length) throw Error('input size limit exceeded');
+    }
+
+    return res.length > 1 ? (res[0] + res[1]) / 2 : res[0];
+};
+
+ */
