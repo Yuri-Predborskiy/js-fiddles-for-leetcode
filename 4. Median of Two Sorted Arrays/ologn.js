@@ -6,7 +6,7 @@ function log(...messages) {
     if (logging) console.log(messages.join(' '));
 }
 
-function kth(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, startRight = 0, endRight = arrRight.length) {
+function getIndexElementInTwoSortedArrays(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, startRight = 0, endRight = arrRight.length) {
     let shiftLeft = Math.floor((endLeft - startLeft) / 2);
     let shiftRight = Math.floor((endRight - startRight) / 2);
 
@@ -29,11 +29,11 @@ function kth(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, 
         if (arrLeft[startLeft + shiftLeft] < arrRight[startRight + shiftRight]) {
             // log(`arrLeft[startLeft + shiftLeft] ${arrLeft[startLeft + shiftLeft]} < arrRight[startRight + shiftRight] ${arrRight[startRight + shiftRight]}`);
             log('limiting start of left and limiting index - shiftLeft - 1');
-            return kth(arrLeft, arrRight, index - shiftLeft - 1, startLeft + shiftLeft + 1, endLeft, startRight, endRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index - shiftLeft - 1, startLeft + shiftLeft + 1, endLeft, startRight, endRight);
         } else {
             // log(`arrLeft[startLeft + shiftLeft] ${arrLeft[startLeft + shiftLeft]} >= arrRight[startRight + shiftRight] ${arrRight[startRight + shiftRight]}`);
             log('limiting start of right and limiting index - shiftRight - 1');
-            return kth(arrLeft, arrRight, index - shiftRight - 1, startLeft, endLeft, startRight + shiftRight + 1, endRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index - shiftRight - 1, startLeft, endLeft, startRight + shiftRight + 1, endRight);
         }
     } else {
         // log(`shiftLeft (${shiftLeft}) + shiftRight (${shiftRight}) >= index (${index})`);
@@ -41,11 +41,11 @@ function kth(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, 
         if (arrLeft[startLeft + shiftLeft] < arrRight[startRight + shiftRight]) {
             // log(`arrLeft[startLeft + shiftLeft] ${arrLeft[startLeft + shiftLeft]} < arrRight[startRight + shiftRight] ${arrRight[startRight + shiftRight]}`);
             log('limiting end of right');
-            return kth(arrLeft, arrRight, index, startLeft, endLeft, startRight, startRight + shiftRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index, startLeft, endLeft, startRight, startRight + shiftRight);
         } else {
             // log(`arrLeft[startLeft + shiftLeft] ${arrLeft[startLeft + shiftLeft]} >= arrRight[startRight + shiftRight] ${arrRight[startRight + shiftRight]}`);
             log('limiting end of left');
-            return kth(arrLeft, arrRight, index, startLeft, startLeft + shiftLeft, startRight, endRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index, startLeft, startLeft + shiftLeft, startRight, endRight);
         }
     }
 }
@@ -84,12 +84,12 @@ let tests = [
 ];
 
 tests.forEach(test => {
-    let res = kth(test.a, test.b, test.index - 1);
+    let res = getIndexElementInTwoSortedArrays(test.a, test.b, test.index - 1);
     logging = res !== test.ans;
     if (logging) {
         logs++;
         pass = 0;
-        kth(test.a, test.b, test.index - 1); // repeat procedure with logging enabled
+        getIndexElementInTwoSortedArrays(test.a, test.b, test.index - 1); // repeat procedure with logging enabled
         logging = !logging;
     }
     log('Inputs:', 'array1', JSON.stringify(test.a), '| array2', JSON.stringify(test.b), '| index', test.index, '| answer', test.ans);

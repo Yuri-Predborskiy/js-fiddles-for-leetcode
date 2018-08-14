@@ -1,4 +1,4 @@
-function kth(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, startRight = 0, endRight = arrRight.length) {
+function getIndexElementInTwoSortedArrays(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, startRight = 0, endRight = arrRight.length) {
     let shiftLeft = Math.floor((endLeft - startLeft) / 2);
     let shiftRight = Math.floor((endRight - startRight) / 2);
 
@@ -11,15 +11,15 @@ function kth(arrLeft, arrRight, index, startLeft = 0, endLeft = arrLeft.length, 
 
     if (shiftLeft + shiftRight < index) {
         if (arrLeft[startLeft + shiftLeft] < arrRight[startRight + shiftRight]) {
-            return kth(arrLeft, arrRight, index - shiftLeft - 1, startLeft + shiftLeft + 1, endLeft, startRight, endRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index - shiftLeft - 1, startLeft + shiftLeft + 1, endLeft, startRight, endRight);
         } else {
-            return kth(arrLeft, arrRight, index - shiftRight - 1, startLeft, endLeft, startRight + shiftRight + 1, endRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index - shiftRight - 1, startLeft, endLeft, startRight + shiftRight + 1, endRight);
         }
     } else {
         if (arrLeft[startLeft + shiftLeft] < arrRight[startRight + shiftRight]) {
-            return kth(arrLeft, arrRight, index, startLeft, endLeft, startRight, startRight + shiftRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index, startLeft, endLeft, startRight, startRight + shiftRight);
         } else {
-            return kth(arrLeft, arrRight, index, startLeft, startLeft + shiftLeft, startRight, endRight);
+            return getIndexElementInTwoSortedArrays(arrLeft, arrRight, index, startLeft, startLeft + shiftLeft, startRight, endRight);
         }
     }
 }
@@ -58,7 +58,7 @@ let tests = [
 ];
 
 tests.forEach(test => {
-    let res = kth(test.a, test.b, test.index - 1);
+    let res = getIndexElementInTwoSortedArrays(test.a, test.b, test.index - 1);
     console.log('Inputs:', 'array1', JSON.stringify(test.a), '| array2', JSON.stringify(test.b), '| index', test.index, '| answer', test.ans);
     console.log('expected:', test.ans, '| calculated:', res, '| result is', res === test.ans ? 'CORRECT' : 'WRONG!');
 });
