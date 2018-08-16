@@ -54,6 +54,12 @@ let tests = [
         b: [3, 4, 7, 9],
         index: 6,
         ans: 7
+    },
+    {
+        a: [],
+        b: [1, 2],
+        index: 2,
+        ans: 2
     }
 ];
 
