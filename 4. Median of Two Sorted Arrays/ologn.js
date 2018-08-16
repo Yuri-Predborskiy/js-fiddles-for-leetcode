@@ -1,5 +1,6 @@
+const DEFAULT_LOGGING_POLICY = false;
+let logging = DEFAULT_LOGGING_POLICY;
 let pass = 0;
-let logging = false;
 let logs = 0;
 
 function log(...messages) {
@@ -91,8 +92,8 @@ let tests = [
 
 tests.forEach(test => {
     let res = getIndexElementInTwoSortedArrays(test.a, test.b, test.index - 1);
-    logging = res !== test.ans;
-    if (logging) {
+    if (DEFAULT_LOGGING_POLICY || res !== test.ans) {
+        logging = true;
         logs++;
         pass = 0;
         getIndexElementInTwoSortedArrays(test.a, test.b, test.index - 1); // repeat procedure with logging enabled
