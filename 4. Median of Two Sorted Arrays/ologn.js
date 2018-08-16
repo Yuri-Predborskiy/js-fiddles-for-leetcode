@@ -1,3 +1,13 @@
+/*
+Acknowledgement:
+Original idea for binary search algorithm was taken from the following GeeksForGeeks C# code piece:
+https://ide.geeksforgeeks.org/DJu7to
+
+Original article:
+K-th Element of Two Sorted Arrays
+https://www.geeksforgeeks.org/k-th-element-two-sorted-arrays/
+ */
+
 const DEFAULT_LOGGING_POLICY = false;
 let logging = DEFAULT_LOGGING_POLICY;
 let pass = 0;
