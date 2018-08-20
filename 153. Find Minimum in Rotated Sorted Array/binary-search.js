@@ -5,7 +5,7 @@
 let findMin = function(nums) {
     let left = 0, right = nums.length - 1;
 
-    while (left + 1 < right && nums[left] > nums[right]) {
+    while (left + 1 < right) {
         let mid = Math.floor((left + right) / 2);
         if (nums[mid] > nums[right]) {
             left = mid;
