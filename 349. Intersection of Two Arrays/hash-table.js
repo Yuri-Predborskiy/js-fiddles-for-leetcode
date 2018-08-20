@@ -4,7 +4,8 @@
  * @return {number[]}
  */
 var intersection = function(nums1, nums2) {
-    let hash = nums1.forEach(item => {
+    let hash = {};
+    nums1.forEach(item => {
         hash[item] = true;
     });
     let res = [];
