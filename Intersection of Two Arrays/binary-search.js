@@ -4,63 +4,64 @@
  * @return {number[]}
  */
 var intersection = function(nums1, nums2) {
-    // find intersection
-    // 1. binary search
-    // pick the smaller array, sort it - O(nlogn)
-    // for every item in larger array, search smaller array using binary search - O(mlogn)
-    // overall complexity nlogn (sorting) + mlogn (one binary search per element)
-    // O(mnlog(min(m,n)) where n is smaller of the two
-
     function sort(arr) {
-        // todo: crea
+        // todo: write a quicksort algorithm
         return arr.sort();
     }
 
-    function isNumInArr(num, arr) {
+    function arrIncludesTarget(arr, target) {
+        // if dictionary includes target - return false to skip duplicates
+        if (dict[target]) {
+            return false;
+        }
+        dict[target] = true;
+        let left = 0, right = arr.length - 1;
 
-        // implement binary search to find an element
-        // return true if element was found, false otherwise
-        // add a hash table to skip duplicate elements
+        // binary search, template 1
+        while (left <= right) {
+            let mid = Math.floor((left + right) / 2);
+            if (arr[mid] === target) {
+                // target found
+                return true;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        // target not found
+        return false;
     }
 
-    // sort smaller array
-    let dict = {};
+    let dict = {}, res = [];
     let smaller = nums1.length < nums2.length ? nums1 : nums2;
     let larger = nums1.length > nums2.length ? nums1 : nums2;
     sort(smaller);
-    let left = 0, right = smaller.length - 1;
 
     larger.forEach(item => {
-
-    })
-    while (left + 1 < right) {
-        let mid = Math.floor((left + right) / 2);
-        if (nums[mid] > nums[right]) {
-            left = mid;
-        } else if (nums[mid] < nums[left]) {
-            right = mid;
-        } else {
-            right--;
+        if (arrIncludesTarget(smaller, item)) {
+            res.push(item);
         }
-    }
+    });
 
-    return Math.min(nums[left], nums[right]);
+    return res;
 };
 
 let tests = [
-    { nums: [3,4,5,1,2] , ans: 1 },
-    { nums: [4,5,6,7,0,1,2], ans: 0 },
-    { nums: [1], ans: 1 },
-    { nums: [5,1,2], ans: 1 },
-    { nums: [1,3,5], ans: 1 },
-    { nums: [2,2,2,0,1], ans: 0 },
-    { nums: [2,2,2,2,2,3,4,5,6,1], ans: 1 },
-    { nums: [4,1,4], ans: 1 },
-    { nums: [3,3,1,2,3,3,3,3,3,3,3], ans: 1 },
-    { nums: [3,3,1,3], ans: 1 },
+    { nums1: [1,2,2,1], nums2: [2,2], ans: [2] },
+    { nums1: [4,9,5], nums2: [9,4,9,8,4], ans: [9,4] },
 ];
 
 tests.forEach(test => {
-    let res = findMin(test.nums);
-    console.log('expected:', test.ans, '| calculated:', res, '| result is', res === test.ans ? 'CORRECT' : 'WRONG!');
+    let res = intersection(test.nums1, test.nums2);
+    let correct = compareArrays(test.ans, res);
+    console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
 });
+
+function compareArrays(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    arr1.forEach(item => {
+        if (!arr2.includes(item)) return false;
+    });
+    return true;
+}
