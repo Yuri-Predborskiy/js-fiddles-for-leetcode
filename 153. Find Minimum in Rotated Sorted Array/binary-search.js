@@ -3,9 +3,6 @@
  * @return {number}
  */
 let findMin = function(nums) {
-    if (nums.length === 1) {
-        return nums[0];
-    }
     let left = 0, right = nums.length - 1;
 
     while (left + 1 < right && nums[left] > nums[right]) {
@@ -17,12 +14,7 @@ let findMin = function(nums) {
         }
     }
 
-    if (nums[left] < nums[right]) {
-        return nums[left];
-    } else if (nums[right] < nums[left]) {
-        return nums[right];
-    }
-    return -1;
+    return Math.min(nums[left], nums[right]);
 };
 
 let tests = [
@@ -30,9 +22,6 @@ let tests = [
     { nums: [4,5,6,7,0,1,2], ans: 0 },
     { nums: [1], ans: 1 },
     { nums: [3,1,2], ans: 1 },
-    // { nums: ["c", "f", "j"], ans: 'c' },
-    // { nums: ["c", "f", "j"], ans: 'c' },
-    // { nums: ["e","e","e","e","e","e","n","n","n","n"], ans: 'e' },
 ];
 
 tests.forEach(test => {
