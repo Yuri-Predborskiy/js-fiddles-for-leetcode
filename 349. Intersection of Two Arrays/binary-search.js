@@ -34,7 +34,7 @@ var intersection = function(nums1, nums2) {
     }
 
     let dict = {}, res = [];
-    let smaller = nums1.length < nums2.length ? nums1 : nums2;
+    let smaller = nums1.length <= nums2.length ? nums1 : nums2;
     let larger = nums1.length > nums2.length ? nums1 : nums2;
     sort(smaller);
 
