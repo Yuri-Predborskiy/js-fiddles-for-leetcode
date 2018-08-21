@@ -17,19 +17,15 @@ var twoSum = function(nums, target) {
         }
 
         if (direction > 0) {
-            return (nums[right] > target && right + 1 < nums.length)  ? right + 1 : right;
+            return (nums[left] > target && left + 1 < nums.length)  ? left + 1 : left;
         } else {
-            return (nums[left] > target && left - 1 > 0) ? left - 1 : left;
+            return (nums[right] > target && right - 1 > 0) ? right - 1 : right;
         }
     }
 
     let left = 0, right = nums.length - 1;
-    let cnt = 0;
 
     while (nums[left] + nums[right] !== target) {
-        // in case of infinite cycle, break glass and throw error
-        cnt++; if (cnt > 900) { throw new Error('infinite cycle detected, exiting'); }
-
         if (nums[left] + nums[right] === target) {
             break;
         } else if (nums[left] + nums[right] > target) {
@@ -52,14 +48,20 @@ let tests = [
             785,789,794,803,809,815,847,858,863,863,874,887,896,916,920,926,927,930,933,957,981,997
         ],
         target: 542,
-        ans: [1,2]
+        ans: [24,32]
     }
 ];
 
 tests.forEach(test => {
     let res = twoSum(test.nums, test.target);
     let correct = compareArrays(test.ans, res);
-    console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
+    console.log(
+        'expected:', test.ans,
+        '| calculated:', res,
+        'numbers', test.nums[res[0]], 'and', test.nums[res[1]], 'sum', test.nums[res[0] - 1] + test.nums[res[1] - 1],
+        'target', test.target,
+        '| result is', correct ? 'CORRECT' : 'WRONG!'
+    );
 });
 
 function compareArrays(arr1, arr2) {
