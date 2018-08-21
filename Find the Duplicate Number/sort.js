@@ -1,23 +1,17 @@
 /*
-    Note: this only works if arrays has no missing values, like [1,2,3,4,4]
-    In case array may have missing values, this approach will fail, example: [1,4,4,2,4]
+    This approach requires ability to modify the input array.
+    If input is read-only, you have to create a copy of array (memory limit: O(n)).
+    Time complexity: O(NlogN) (sorting) and subsequent O(n) to find duplicate, O(NlogN) total
  */
-
 /**
  * @param {number[]} nums
  * @return {number}
  */
 var findDuplicate = function(nums) {
-    let sum = 0, max = -Infinity, normal = 0;
-    for (let i = 0; i < nums.length; i++) {
-        sum += nums[i];
-        normal += i + 1;
-        max = Math.max(max, nums[i]);
+    nums.sort((a, b) => a > b ? 1 : -1);
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] === nums[i-1]) return nums[i];
     }
-    for (let i = nums.length; i > max; i--) {
-        normal -= i;
-    }
-    return (sum - normal) / (nums.length - max);
 };
 
 let tests = [
