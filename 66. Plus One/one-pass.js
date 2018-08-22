@@ -1,6 +1,7 @@
 /*
-    One pass brute force - find largest and second largest element
-    If Math.floor(largest) / 2 >= 2nd largest, return largest element index, otherwise return -1
+    One pass solution - go over the array and increase the last number by 1.
+    If a number overflows (becomes 10), replace it with 0 and increase next number.
+    If after finishing iterating over the array we still have a remainder, unshift array.
  */
 const compareArrays = require('../helper.js').compareArrays;
 /**
@@ -30,6 +31,7 @@ let plusOne = function(digits) {
 let tests = [
     { nums: [1,2,3] , ans: [1,2,4] },
     { nums: [4,3,2,1], ans: [4,3,2,2] },
+    { nums: [9,9,9,9], ans: [1,0,0,0,0] },
 ];
 
 tests.forEach(test => {
