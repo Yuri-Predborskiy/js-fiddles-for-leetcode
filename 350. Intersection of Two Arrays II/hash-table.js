@@ -1,3 +1,5 @@
+const compareArrays = require('../helper.js').compareArrays;
+
 /**
  * @param {number[]} nums1
  * @param {number[]} nums2
@@ -31,11 +33,3 @@ tests.forEach(test => {
     let correct = compareArrays(test.ans, res);
     console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
 });
-
-function compareArrays(arr1, arr2) {
-    if (arr1.length !== arr2.length) return false;
-    for (let i = 0; i < arr1.length; i++) {
-        if (!arr2.includes(arr1[i])) return false;
-    }
-    return true;
-}
