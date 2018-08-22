@@ -6,7 +6,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var dominantIndex = function(nums) {
+let dominantIndex = function(nums) {
     let max = {
         value: -Infinity,
         index: -1,
@@ -21,7 +21,7 @@ var dominantIndex = function(nums) {
             max.next = num;
         }
     });
-    if (Math.floor(max.value / 2) >= max.next) return max.index;
+    if (max.value >= 2 * max.next) return max.index;
     return -1;
 };
 
