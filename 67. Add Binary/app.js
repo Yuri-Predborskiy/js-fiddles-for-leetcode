@@ -8,7 +8,7 @@ let addBinary = function(a, b) {
     let shift = long.length - short.length;
     let res = [], remainder = 0;
     for (let i = long.length - 1; i >= 0; --i) {
-        res[i] = Number(long[i]) + (Number(short[i - shift]) || 0) + remainder;
+        res[i] = Number(long[i]) + (Number(short[i - shift]) || 0) + (remainder ? remainder-- : 0);
         if (res[i] > 1) {
             remainder = Math.floor(res[i] / 2);
             res[i] = res[i] % 2;
@@ -26,6 +26,7 @@ let tests = [
     { a: '10', b: '1', ans: '11' },
     { a: '11', b: '1', ans: '100' },
     { a: '1010', b: '1', ans: '1011' },
+    { a: '1010', b: '1011', ans: '10101' },
 ];
 
 tests.forEach(test => {
