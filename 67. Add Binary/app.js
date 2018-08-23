@@ -4,30 +4,14 @@
  * @return {string}
  */
 let addBinary = function(a, b) {
-    let al = a.length, bl = b.length;
-    let long = al >= bl ? a : b;
-    let short = al < bl ? a : b;
+    let [long, short] = a.length >= b.length ? [a, b] : [b, a];
     let shift = long.length - short.length;
     let res = [], remainder = 0;
     for (let i = long.length - 1; i >= 0; --i) {
-        if (remainder === 0) {
-            if (long[i] === '1' && short[i - shift] === '1') {
-                res[i] = '0';
-                ++remainder;
-            } else if (long[i] === '1' || short[i - shift] === '1') {
-                res[i] = '1';
-            } else {
-                res[i] = '0';
-            }
-        } else {
-            if (long[i] === '1' && short[i - shift] === '1') {
-                res[i] = '1';
-            } else if (long[i] === '1' || short[i - shift] === '1') {
-                res[i] = '0';
-            } else {
-                res[i] = '1';
-                --remainder;
-            }
+        res[i] = Number(long[i]) + (Number(short[i - shift]) || 0) + remainder;
+        if (res[i] > 1) {
+            remainder = Math.floor(res[i] / 2);
+            res[i] = res[i] % 2;
         }
     }
     if (remainder > 0) {
@@ -37,6 +21,7 @@ let addBinary = function(a, b) {
 };
 
 let tests = [
+    { a: '11', b: '11', ans: '110' },
     { a: '0', b: '1', ans: '1' },
     { a: '10', b: '1', ans: '11' },
     { a: '11', b: '1', ans: '100' },
