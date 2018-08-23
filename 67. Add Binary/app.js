@@ -1,3 +1,6 @@
+/*
+    Slower solution that uses less code and modern Javascript features (destructuring).
+*/
 /**
  * @param {string} a
  * @param {string} b
