@@ -5,10 +5,12 @@ const {compareLinkedLists, ListNode, makeListNode} = require('../helper');
  * @param {ListNode} l2
  * @return {ListNode}
  */
-var addTwoNumbers = function(l1, l2) {
+let addTwoNumbers = function(l1, l2) {
     let res = new ListNode(null), item = res, remainder = 0, prev;
     while (l1 || l2) {
-        item.val = (l1.val || 0) + (l2.val || 0) + remainder;
+        let left = l1 ? l1.val : 0;
+        let right = l2 ? l2.val : 0;
+        item.val = left + right + remainder;
         if (remainder > 0) remainder = 0;
         if (item.val >= 10) {
             item.val -= 10;
@@ -17,16 +19,22 @@ var addTwoNumbers = function(l1, l2) {
         item.next = new ListNode(null);
         prev = item;
         item = item.next;
-        l1 = l1.next;
-        l2 = l2.next;
+        l1 = l1 ? l1.next : null;
+        l2 = l2 ? l2.next : null;
     }
-    prev.next = null;
+    if (remainder) {
+        prev.next.val = remainder;
+    } else {
+        prev.next = null;
+    }
     return res;
 };
 
 
 let tests = [
     { l1: makeListNode([2, 4, 3]), l2: makeListNode([5, 6, 4]), ans: makeListNode([7, 0, 8]) },
+    { l1: makeListNode([5]), l2: makeListNode([5]), ans: makeListNode([0, 1]) },
+
 ];
 
 tests.forEach(test => {
