@@ -1,4 +1,3 @@
-let cnt = 0, cnt2 = 0;
 /**
  * @param {string} haystack
  * @param {string} needle
