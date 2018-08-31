@@ -3,9 +3,9 @@
  * @param {number} val
  * @return {number}
  */
-var removeElement = function(nums, val) {
-    let fast = 0, slow = 0, len = 0;
-    for (fast = 0; fast < nums.length; fast++) {
+let removeElement = function(nums, val) {
+    let len = 0;
+    for (let fast = 0, slow = 0; fast < nums.length; fast++) {
         if (nums[fast] === val) {
             continue;
         }
