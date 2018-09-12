@@ -8,41 +8,13 @@ const compareArrays = require('../helper.js').compareArrays;
  * @return {number[]}
  */
 let getRow = function(rowIndex) {
-    let last = [1];
-
-    for (let i = 1; i <= rowIndex; ++i) {
-        let next = [1];
-        for (let j = 1; j <= i; ++j) {
-            if (j === i) {
-                next.push(1);
-            } else {
-                next.push(last[j - 1] + last[j]);
-            }
-        }
-        last = next;
-    }
-
-    return last;
-};
-
-/**
- * @param {number} rowIndex
- * @return {number[]}
- */
-let getRowOptimal = function(rowIndex) {
     let row = [1];
-
-    //todo: work from the end of the array, otherwise you'll update previous element before calculating the sum
     for (let i = 1; i <= rowIndex; ++i) {
-        for (let j = 1; j <= i; ++j) {
-            if (j <= Math.floor((i + 1) / 2)) {
-                row[j] = row[j - 1] + (row[j] || 0);
-            } else {
-                row[j] = row[i - j];
-            }
+        row[row.length] = 1;
+        for (let j = i - 1; j >= 1; --j) {
+            row[j] = row[j - 1] + row[j];
         }
     }
-
     return row;
 };
 
