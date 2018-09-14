@@ -21,7 +21,7 @@ function compareLinkedLists(list1, list2) {
     }
     let val1 = collectValues(list1);
     let val2 = collectValues(list2);
-    console.log('list 1:', val1, ', list 2:', val2);
+    console.log('list 1:', val1, ', list 2:', val2); // todo: remove log, return result object?
     return val1 === val2;
 }
 

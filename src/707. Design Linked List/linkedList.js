@@ -1,3 +1,5 @@
+const { createLinkedList, compareLinkedLists } = require('../helper');
+
 /**
  * Initialize your data structure here.
  */
@@ -92,16 +94,34 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
  * obj.addAtIndex(index,val)
  * obj.deleteAtIndex(index)
  */
-let linkedList = new MyLinkedList();
+let linkedList = new MyLinkedList(), test, res;
 linkedList.addAtHead(5);
 linkedList.addAtHead(2);
+test = createLinkedList([2, 5]);
+res = compareLinkedLists(linkedList.head, test);
+console.log('stage 1', res ? 'SUCCESS' : 'FAIL');
+
 linkedList.deleteAtIndex(1);
+test = createLinkedList([2]);
+res = compareLinkedLists(linkedList.head, test);
+console.log('stage 2', res ? 'SUCCESS' : 'FAIL');
+
 linkedList.addAtIndex(1, 9);
 linkedList.addAtHead(4);
 linkedList.addAtHead(9);
 linkedList.addAtHead(8);
-console.log('3 ?', linkedList.get(3));
+test = createLinkedList([8, 9, 4, 2, 9]);
+res = compareLinkedLists(linkedList.head, test);
+console.log('stage 3', res ? 'SUCCESS' : 'FAIL');
+
+test = linkedList.get(3);
+res = (test === 2);
+console.log('stage 4', res ? 'SUCCESS' : 'FAIL');
+
 linkedList.addAtTail(1);
 linkedList.addAtIndex(3, 6);
 linkedList.addAtHead(3);
 
+test = createLinkedList([3,8,9,4,6,2,9,1]);
+res = compareLinkedLists(linkedList.head, test);
+console.log('finale', res ? 'SUCCESS' : 'FAIL');
