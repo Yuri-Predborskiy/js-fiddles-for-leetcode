@@ -1,4 +1,4 @@
-const {compareLinkedLists, ListNode, makeListNode} = require('../helper');
+const {compareLinkedLists, ListNode, createLinkedList} = require('../helper');
 
 /**
  * @param {ListNode} l1
@@ -32,8 +32,8 @@ let addTwoNumbers = function(l1, l2) {
 
 
 let tests = [
-    { l1: makeListNode([2, 4, 3]), l2: makeListNode([5, 6, 4]), ans: makeListNode([7, 0, 8]) },
-    { l1: makeListNode([5]), l2: makeListNode([5]), ans: makeListNode([0, 1]) },
+    { l1: createLinkedList([2, 4, 3]), l2: createLinkedList([5, 6, 4]), ans: createLinkedList([7, 0, 8]) },
+    { l1: createLinkedList([5]), l2: createLinkedList([5]), ans: createLinkedList([0, 1]) },
 
 ];
 

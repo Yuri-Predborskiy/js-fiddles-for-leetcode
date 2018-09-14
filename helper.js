@@ -30,16 +30,6 @@ function ListNode(val) {
     this.next = null;
 }
 
-function makeListNode(items) {
-    let list = new ListNode(items[0]);
-    let item = list;
-    for (let i = 1; i < items.length; i++) {
-        item.next = new ListNode(items[i]);
-        item = item.next;
-    }
-    return list;
-}
-
 function createLinkedList(values) {
     let head = new ListNode(values[0]), next = head;
     for (let i = 1; i < values.length; i++) {
@@ -53,6 +43,5 @@ module.exports = {
     compareArrays,
     ListNode,
     compareLinkedLists,
-    makeListNode,
     createLinkedList,
 };
