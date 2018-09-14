@@ -12,8 +12,8 @@ function compareArrays(arr1, arr2) {
 
 function compareLinkedLists(list1, list2) {
     function collectValues(list) {
-        let val = '' + list.val;
-        while (list.next) {
+        let val = '' + (list ? list.val : '');
+        while (list && list.next) {
             list = list.next;
             val += list.val;
         }
@@ -40,9 +40,19 @@ function makeListNode(items) {
     return list;
 }
 
+function createLinkedList(values) {
+    let head = new ListNode(values[0]), next = head;
+    for (let i = 1; i < values.length; i++) {
+        next.next = new ListNode(values[i]);
+        next = next.next;
+    }
+    return head;
+}
+
 module.exports = {
     compareArrays,
     ListNode,
     compareLinkedLists,
     makeListNode,
+    createLinkedList,
 };
