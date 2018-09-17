@@ -1,10 +1,15 @@
 const { createLinkedList, compareLinkedLists } = require('../helper');
 
+/*
+    Design doubly linked list - has next and prev pointers, head and tail pointers
+ */
+
 /**
  * Initialize your data structure here.
  */
 var MyLinkedList = function() {
     this.head = null;
+    this.tail = null;
     this.length = 0;
 };
 
@@ -38,7 +43,14 @@ MyLinkedList.prototype.addAtHead = function(val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function(val) {
-    this.addAtIndex(this.length, val);
+    // todo: refactor to add at index
+    let node = {
+        val,
+        prev: this.tail,
+        next: null
+    };
+    this.tail.next = node;
+    this.tail = node;
 };
 
 /**
@@ -50,18 +62,26 @@ MyLinkedList.prototype.addAtTail = function(val) {
 MyLinkedList.prototype.addAtIndex = function(index, val) {
     if (index < 0 || index > this.length) return;
 
-    let me = this.head, prev = this.head, i = 0;
+    // todo: refactor to move from head or from tail depending on index position (before/after middle)
+
+    let me = this.head, prev = null, i = 0;
     while (i++ < index) {
         prev = me;
         me = me.next;
     }
     let node = {
         val,
-        next: me
+        next: me,
+        prev
     };
     if (index === 0) {
         this.head = node;
+        this.head.prev = null;
+    } else if (index === this.length) {
+        prev.next = node;
+        this.tail = node;
     } else {
+        me.prev = node;
         prev.next = node;
     }
     this.length++;
