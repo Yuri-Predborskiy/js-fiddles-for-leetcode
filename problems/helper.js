@@ -12,10 +12,10 @@ function compareArrays(arr1, arr2) {
 
 function compareLinkedLists(list1, list2) {
     function collectValues(list) {
-        let val = '' + (list ? list.val : '');
-        while (list && list.next) {
-            list = list.next;
+        let val = '';
+        while (list) {
             val += list.val;
+            list = list.next;
         }
         return val;
     }
