@@ -2,10 +2,9 @@ const {ListNode, compareLinkedLists, createLinkedList, linkedListToString} = req
 
 /*
     Merge arbitrary number of sorted linked lists
-    Grab values, put them into array. Sort array
-    Time complexity: O(n*log(n)) for sorting the array
-    Space complexity: O(n)
-    Run time: under 100 ms (fast)
+    Time complexity: O(n) (there will be O(n) comparisons)
+    Space complexity: O(n) (to combine all linked lists into a single linked list without destroying inputs)
+    Run time: 700ms (abysmally slow)
  */
 
 /**
