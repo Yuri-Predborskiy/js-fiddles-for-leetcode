@@ -1,4 +1,4 @@
-const { createLinkedList, compareLinkedLists } = require('../helper');
+const { createLinkedList, compareLinkedLists, } = require('../helper');
 
 /*
     Design doubly linked list - has next and prev pointers, head and tail pointers
@@ -19,7 +19,7 @@ var MyLinkedList = function() {
  * @return {number}
  */
 MyLinkedList.prototype.get = function(index) {
-    if (index >= this.length) return -1;
+    if (index >= this.length || index < 0) return -1;
     let me = this.head;
     let i = 0;
     while (i++ < index) {
@@ -43,14 +43,7 @@ MyLinkedList.prototype.addAtHead = function(val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function(val) {
-    // todo: refactor to add at index
-    let node = {
-        val,
-        prev: this.tail,
-        next: null
-    };
-    this.tail.next = node;
-    this.tail = node;
+    this.addAtIndex(this.length, val);
 };
 
 /**
@@ -62,27 +55,48 @@ MyLinkedList.prototype.addAtTail = function(val) {
 MyLinkedList.prototype.addAtIndex = function(index, val) {
     if (index < 0 || index > this.length) return;
 
-    // todo: refactor to move from head or from tail depending on index position (before/after middle)
-
-    let me = this.head, prev = null, i = 0;
-    while (i++ < index) {
-        prev = me;
-        me = me.next;
-    }
-    let node = {
-        val,
-        next: me,
-        prev
-    };
     if (index === 0) {
+        // add at head
+        let node = {
+            val,
+            next: this.head,
+            prev: null,
+        };
+        if (this.head) {
+            this.head.prev = node;
+        }
         this.head = node;
-        this.head.prev = null;
+        if (!this.tail) {
+            this.tail = node;
+        }
     } else if (index === this.length) {
-        prev.next = node;
+        // add at tail
+        let node = {
+            val,
+            next: null,
+            prev: this.tail,
+        };
+        if (this.tail) {
+            this.tail.next = node;
+        }
         this.tail = node;
+        if (!this.head) {
+            this.head = node;
+        }
     } else {
+        // add in the middle
+        let me = this.head;
+        let i = 0;
+        while (i++ < index) {
+            me = me.next;
+        }
+        let node = {
+            val,
+            next: me,
+            prev: me.prev,
+        };
+        me.prev.next = node;
         me.prev = node;
-        prev.next = node;
     }
     this.length++;
 };
@@ -93,15 +107,32 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function(index) {
-    if (index < 0 || index >= this.length) return;
+    if (index < 0 || index >= this.length || this.length === 0) return;
 
-    let me = this.head, prev = this.head, i = 0;
-    while (i++ < index) {
-        prev = me;
-        me = me.next;
+    if (this.length === 1) {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+        return;
     }
 
-    prev.next = me.next;
+    if (index === 0) {
+        // delete at head
+        this.head = this.head.next;
+        this.head.prev = null;
+    } else if (index === this.length - 1) {
+        // delete at tail
+        this.tail = this.tail.prev;
+        this.tail.next = null;
+    } else {
+        // delete in the middle
+        let me = this.head, i = 0;
+        while (i++ < index) {
+            me = me.next;
+        }
+        me.prev.next = me.next;
+        me.next.prev = me.prev;
+    }
     this.length--;
 };
 
