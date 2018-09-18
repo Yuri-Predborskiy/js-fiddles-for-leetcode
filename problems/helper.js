@@ -11,18 +11,27 @@ function compareArrays(arr1, arr2) {
 }
 
 function compareLinkedLists(list1, list2) {
-    function collectValues(list) {
-        let val = '';
-        while (list) {
-            val += list.val;
-            list = list.next;
-        }
-        return val;
-    }
-    let val1 = collectValues(list1);
-    let val2 = collectValues(list2);
-    console.log('list 1:', val1, ', list 2:', val2); // todo: remove log, return result object?
+    let val1 = linkedListToString(list1);
+    let val2 = linkedListToString(list2);
     return val1 === val2;
+}
+
+function linkedListToString(list, separator = '') {
+    let val = '';
+    while (list) {
+        val += list.val + separator;
+        list = list.next;
+    }
+    return val.substring(0, val.length - separator.length);
+}
+
+function linkedListToStringBack(list, separator = '') {
+    let val = '';
+    while (list) {
+        val = list.val + separator + val;
+        list = list.prev;
+    }
+    return val.substring(0, val.length - separator.length);
 }
 
 function ListNode(val) {
@@ -44,4 +53,6 @@ module.exports = {
     ListNode,
     compareLinkedLists,
     createLinkedList,
+    linkedListToString,
+    linkedListToStringBack,
 };
