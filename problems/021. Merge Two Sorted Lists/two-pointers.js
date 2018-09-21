@@ -18,13 +18,21 @@ let mergeTwoLists = function(l1, l2) {
         return donor;
     }
 
+    if (!l1) return l2;
+    if (!l2) return l1;
+
     let combined = null, head = null;
-    while (l1 || l2) {
-        if ((l1 && l2) && (l1.val <= l2.val) || !l2) {
+    while (l1 && l2) {
+        if (l1.val <= l2.val) {
             l1 = addNode(combined, l1);
-        } else if ((l1 && l2) && (l1.val > l2.val) || !l1) {
+        } else {
             l2 = addNode(combined, l2);
         }
+    }
+    if (l2) {
+        combined.next = l2;
+    } else if (l1) {
+        combined.next = l1;
     }
     return head;
 };
@@ -32,9 +40,12 @@ let mergeTwoLists = function(l1, l2) {
 let left = createLinkedList([1,2,4]);
 let right = createLinkedList([1,3,4]);
 let combined = createLinkedList([1,1,2,3,4,4]);
+let short = createLinkedList([0]);
+let shortCombined = createLinkedList([0,1,2,4]);
 
 let tests = [
     { l1: left, l2: right, ans: combined },
+    { l1: short, l2: left, ans: shortCombined },
 ];
 
 tests.forEach(test => {
