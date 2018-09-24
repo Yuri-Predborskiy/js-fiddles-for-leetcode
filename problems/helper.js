@@ -16,6 +16,12 @@ function compareLinkedLists(list1, list2) {
     return val1 === val2;
 }
 
+function compareRandomLinkedLists(list1, list2) {
+    let val1 = randomLinkedListToString(list1);
+    let val2 = randomLinkedListToString(list2);
+    return val1 === val2;
+}
+
 function linkedListToString(list, separator = '') {
     let val = '';
     while (list) {
@@ -23,6 +29,15 @@ function linkedListToString(list, separator = '') {
         list = list.next;
     }
     return val.substring(0, val.length - separator.length);
+}
+
+function randomLinkedListToString(list, separator = '') {
+    let label = '';
+    while (list) {
+        label += list.label + separator;
+        list = list.next;
+    }
+    return label.substring(0, label.length - separator.length);
 }
 
 function linkedListToStringBack(list, separator = '') {
@@ -39,6 +54,11 @@ function ListNode(val) {
     this.next = null;
 }
 
+function RandomListNode(label) {
+    this.label = label;
+    this.next = this.random = null;
+}
+
 function createLinkedList(values) {
     let head = new ListNode(values[0]), next = head;
     for (let i = 1; i < values.length; i++) {
@@ -48,11 +68,24 @@ function createLinkedList(values) {
     return head;
 }
 
+function createRandomLinkedList(values) {
+    let head = new RandomListNode(values[0]), next = head;
+    for (let i = 1; i < values.length; i++) {
+        next.next = new RandomListNode(values[i]);
+        next = next.next;
+    }
+    return head;
+}
+
 module.exports = {
     compareArrays,
     ListNode,
+    RandomListNode,
     compareLinkedLists,
+    compareRandomLinkedLists,
     createLinkedList,
+    createRandomLinkedList,
     linkedListToString,
+    randomLinkedListToString,
     linkedListToStringBack,
 };
