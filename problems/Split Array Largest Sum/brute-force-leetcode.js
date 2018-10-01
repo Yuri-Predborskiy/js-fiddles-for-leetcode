@@ -1,7 +1,4 @@
-const _ = require('lodash');
-const helper = require('../helper');
-const LOGGING = true;
-helper.log = _.partial(helper.log, LOGGING);
+// leetcode version of the code - no helper methods, no logging.
 
 /*
     The brute force approach:
@@ -48,7 +45,7 @@ let splitArray = function(nums, m) {
     }
 
     if (m === 1) {
-        return nums.reduce(helper.reducerArraySum);
+        return nums.reduce((accumulator, currentValue) => accumulator + currentValue);
     }
     if (m === nums.length) {
         return getMaxItem();
@@ -62,31 +59,21 @@ let splitArray = function(nums, m) {
 
     let subSum = 0, minSum = Infinity, maxSubSum = 0;
     while (starts[0] === 0) {
-        let groups = [];
         for (let startIndex = 0; startIndex < starts.length; startIndex++) {
             let finish = starts[startIndex + 1] ? starts[startIndex + 1] : nums.length;
-            let group = [];
             for (let index = starts[startIndex]; index < finish; index++) {
                 subSum += nums[index];
-                group.push(nums[index]);
             }
             maxSubSum = Math.max(maxSubSum, subSum);
-            groups.push({group, sum: group.reduce(helper.reducerArraySum)});
             subSum = 0;
         }
         if (minSum > maxSubSum) {
             minSum = maxSubSum;
-            helper.log(`new best minSum is ${minSum}, groups:`);
-            helper.log(groups);
-        } else {
-            helper.log('sub-optimal grouping with minSum', maxSubSum, 'groups:');
-            helper.log(groups);
         }
         maxSubSum = 0;
         updateNextStart();
     }
 
-    helper.log('ending starts', starts);
     return minSum;
 };
 

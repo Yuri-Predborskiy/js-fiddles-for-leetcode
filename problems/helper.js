@@ -1,3 +1,5 @@
+let loggingStateBoolean = false;
+
 function compareArrays(arr1, arr2) {
     if (arr1.length !== arr2.length) return false;
     for (let i = 0; i < arr1.length; i++) {
@@ -77,6 +79,16 @@ function createRandomLinkedList(values) {
     return head;
 }
 
+function reducerArraySum(accumulator, currentValue) {
+    return accumulator + currentValue;
+}
+
+function log(loggingEnabledBoolean = false, first, ...rest) {
+    if (loggingEnabledBoolean) {
+        console.log(first, rest);
+    }
+}
+
 module.exports = {
     compareArrays,
     ListNode,
@@ -88,4 +100,7 @@ module.exports = {
     linkedListToString,
     randomLinkedListToString,
     linkedListToStringBack,
+    reducerArraySum,
+    log,
+    loggingStateBoolean,
 };
