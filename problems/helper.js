@@ -1,12 +1,16 @@
 let loggingStateBoolean = false;
 
 function compareArrays(arr1, arr2) {
-    if (arr1.length !== arr2.length) return false;
-    for (let i = 0; i < arr1.length; i++) {
-        if (Array.isArray(arr1[i])) {
-            if (!compareArrays(arr1[i], arr2[i])) return false;
+    if (typeof arr1 !== typeof arr2 || typeof arr1 !== typeof [] || arr1.length !== arr2.length) return false;
+    let left = arr1.slice(), right = arr2.slice(); // make a copy
+    left.sort((a, b) => a - b);
+    right.sort((a, b) => a - b);
+    for (let i = 0; i < left.length; i++) {
+        if (typeof left[i] !== typeof right[i]) return false;
+        if (Array.isArray(left[i])) {
+            if (!compareArrays(left[i], right[i])) return false;
         } else {
-            if (arr2[i] !== arr1[i]) return false;
+            if (left[i] !== right[i]) return false;
         }
     }
     return true;

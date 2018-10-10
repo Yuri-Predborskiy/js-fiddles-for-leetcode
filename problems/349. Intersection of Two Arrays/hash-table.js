@@ -22,6 +22,36 @@ var intersection = function(nums1, nums2) {
     return res;
 };
 
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersectionAlternative = function(nums1, nums2) {
+    let smaller, larger;
+    if (nums1.length < nums2.length) {
+        smaller = nums1;
+        larger = nums2;
+    } else {
+        smaller = nums2;
+        larger = nums1;
+    }
+    let dict = {};
+    for (let i = 0; i < smaller.length; i++) {
+        dict[smaller[i]] = smaller[i];
+    }
+
+    let res = [];
+    for (let i = 0; i < larger.length; i++) {
+        if (typeof dict[larger[i]] !== 'undefined') {
+            res.push(larger[i]);
+            delete dict[larger[i]]; // values should be unique, remove items that were found and added to res
+        }
+    }
+
+    return res;
+};
+
 let tests = [
     { nums1: [1,2,2,1], nums2: [2,2], ans: [2] },
     { nums1: [4,9,5], nums2: [9,4,9,8,4], ans: [9,4] },
@@ -38,6 +68,12 @@ let tests = [
 
 tests.forEach(test => {
     let res = intersection(test.nums1, test.nums2);
+    let correct = compareArrays(test.ans, res);
+    console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
+});
+
+tests.forEach(test => {
+    let res = intersectionAlternative(test.nums1, test.nums2);
     let correct = compareArrays(test.ans, res);
     console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
 });
