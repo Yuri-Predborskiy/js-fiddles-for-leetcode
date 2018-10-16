@@ -65,6 +65,11 @@ function RandomListNode(label) {
     this.next = this.random = null;
 }
 
+function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+}
+
 function createLinkedList(values) {
     let head = new ListNode(values[0]), next = head;
     for (let i = 1; i < values.length; i++) {
@@ -97,6 +102,7 @@ module.exports = {
     compareArrays,
     ListNode,
     RandomListNode,
+    TreeNode,
     compareLinkedLists,
     compareRandomLinkedLists,
     createLinkedList,
