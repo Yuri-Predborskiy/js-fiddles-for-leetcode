@@ -5,16 +5,18 @@ const {compareArrays} = require('../helper');
  * @return {string[][]}
  */
 let groupAnagrams = function(strs) {
-    let dict = {};
+    let dict = new Map();
     for (let i = 0; i < strs.length; i++) {
         let item = strs[i].split('').sort().join();
-        if (!dict[item]) {
-            dict[item] = [strs[i]];
+        if (!dict.has(item)) {
+            dict.set(item, [strs[i]]);
         } else {
-            dict[item].push(strs[i]);
+            let record = dict.get(item);
+            record.push(strs[i]);
+            dict.set(item, record);
         }
     }
-    return Object.values(dict);
+    return [...dict.values()];
 };
 
 let tests = [
