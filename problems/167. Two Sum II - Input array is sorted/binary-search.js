@@ -5,7 +5,7 @@ const compareArrays = require('../helper.js').compareArrays;
  * @param {number} target
  * @return {number[]}
  */
-var twoSum = function(nums, target) {
+let twoSum = function(nums, target) {
     function findNext(left, right, target, direction) {
         while (left < right) {
             let mid = Math.floor((left + right) / 2);

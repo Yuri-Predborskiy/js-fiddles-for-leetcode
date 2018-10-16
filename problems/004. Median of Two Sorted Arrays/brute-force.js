@@ -76,7 +76,7 @@ idea:
 iterate over array till you find middle
 find middle by using left and right indexes and last index (total number of processed elements)
 
-var findMedianSortedArrays = function(nums1, nums2) {
+let findMedianSortedArrays = function(nums1, nums2) {
     let len = (nums1.length + nums2.length - 1) / 2;
     let range = [0, 1];
     if (len === 0) {

@@ -3,7 +3,7 @@ const { createLinkedList, compareLinkedLists } = require('../helper');
 /**
  * Initialize your data structure here.
  */
-var MyLinkedList = function() {
+let MyLinkedList = function() {
     this.head = null;
     this.length = 0;
 };

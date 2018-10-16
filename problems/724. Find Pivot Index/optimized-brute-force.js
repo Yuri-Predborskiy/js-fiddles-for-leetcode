@@ -7,7 +7,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var pivotIndex = function(nums) {
+let pivotIndex = function(nums) {
     if (nums.length < 1) return -1;
     let left = 0, right = nums.reduce((sum, item) => sum + item);
     for (let i = 0; i < nums.length; i++) {

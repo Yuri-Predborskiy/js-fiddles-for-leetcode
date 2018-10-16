@@ -5,7 +5,7 @@ const compareArrays = require('../helper.js').compareArrays;
  * @param {number[]} nums2
  * @return {number[]}
  */
-var intersect = function(nums1, nums2) {
+let intersect = function(nums1, nums2) {
     function sort(arr) {
         // todo: write a quicksort algorithm
         return arr.sort((a, b) => a > b ? 1 : -1);

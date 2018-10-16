@@ -5,7 +5,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var findDuplicate = function(nums) {
+let findDuplicate = function(nums) {
     for (let slow = 0; slow < nums.length - 1; slow++) {
         for (let fast = slow + 1; fast < nums.length; fast++) {
             if (nums[slow] === nums[fast]) return nums[slow];

@@ -2,7 +2,7 @@
  * @param {string[][]} board
  * @return {boolean}
  */
-var isValidSudoku = function(board) {
+let isValidSudoku = function(board) {
     function isValid(board, row, col) {
         let num = board[row][col];
         // check if row / column / block already has current number

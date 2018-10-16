@@ -5,7 +5,7 @@ const compareArrays = require('../helper.js').compareArrays;
  * @param {number[]} nums2
  * @return {number[]}
  */
-var intersection = function(nums1, nums2) {
+let intersection = function(nums1, nums2) {
     let hash = {};
     nums1.forEach(item => {
         hash[item] = true;
@@ -27,7 +27,7 @@ var intersection = function(nums1, nums2) {
  * @param {number[]} nums2
  * @return {number[]}
  */
-var intersectionAlternative = function(nums1, nums2) {
+let intersectionAlternative = function(nums1, nums2) {
     let smaller, larger;
     if (nums1.length < nums2.length) {
         smaller = nums1;

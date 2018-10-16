@@ -3,7 +3,7 @@
  * @param {string} t
  * @return {boolean}
  */
-var isIsomorphic = function(s, t) {
+let isIsomorphic = function(s, t) {
     let dict = {}, used = {};
     for (let i = 0; i < s.length; i++) {
         let left = s[i], right = t[i];

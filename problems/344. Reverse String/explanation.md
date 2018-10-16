@@ -68,7 +68,7 @@ Verdict of the story: you should **always** use strict mode.
 2. Try to work around the problem of immutable strings by 'concatenating' strings at each step of a loop, like this:
 
 ```
-var reverseString = function(s) {
+let reverseString = function(s) {
     let res = "";
     for(let i = s.length - 1; i >= 0; i --){
         res += s[i];
