@@ -1,4 +1,4 @@
-const TreeNode = require('../helper').TreeNode;
+const {TreeNode, compareArrays, convertBinaryTreeToString} = require('../helper');
 // depth first search, post-order traversal to serialize all items in the tree (make nodes into strings)
 // then add all serialized items into a hash table, key = serialized sub-tree. if item already exists, add to result
 // return result
@@ -43,11 +43,13 @@ tree.right.left.left = new TreeNode(4);
 tree.right.right = new TreeNode(4);
 
 let tests = [
-    { param: tree, ans: true },
+    { param: tree, ans: [tree.left, tree.left.left] },
 ];
 
 tests.forEach(test => {
     let res = findDuplicateSubtrees(test.param);
-    let correct = res === test.ans;
-    console.log(`expected: '${test.ans}' | calculated: '${res}' | result is`, correct ? 'CORRECT' : 'WRONG!');
+    res = res.map(tree => convertBinaryTreeToString(tree));
+    let ans = test.ans.map(tree => convertBinaryTreeToString(tree));
+    let correct = compareArrays(res, ans);
+    console.log(`expected: '${ans}' | calculated: '${res}' | result is`, correct ? 'CORRECT' : 'WRONG!');
 });

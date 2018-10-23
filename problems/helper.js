@@ -33,6 +33,12 @@ function compareRandomLinkedLists(list1, list2) {
     return val1 === val2;
 }
 
+function compareBinaryTrees(tree1, tree2) {
+    let val1 = convertBinaryTreeToString(tree1);
+    let val2 = convertBinaryTreeToString(tree2);
+    return val1 === val2;
+}
+
 function linkedListToString(list, separator = '') {
     let val = '';
     while (list) {
@@ -49,6 +55,11 @@ function randomLinkedListToString(list, separator = '') {
         list = list.next;
     }
     return label.substring(0, label.length - separator.length);
+}
+
+function convertBinaryTreeToString(root) {
+    if (!root) return '#';
+    return root.val + '(' + convertBinaryTreeToString(root.left) + '|' + convertBinaryTreeToString(root.right) + ')';
 }
 
 function linkedListToStringBack(list, separator = '') {
@@ -110,6 +121,8 @@ module.exports = {
     TreeNode,
     compareLinkedLists,
     compareRandomLinkedLists,
+    compareBinaryTrees,
+    convertBinaryTreeToString,
     createLinkedList,
     createRandomLinkedList,
     linkedListToString,
