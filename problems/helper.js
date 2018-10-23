@@ -3,8 +3,13 @@ let loggingStateBoolean = false;
 function compareArrays(arr1, arr2) {
     if (typeof arr1 !== typeof arr2 || typeof arr1 !== typeof [] || arr1.length !== arr2.length) return false;
     let left = arr1.slice(), right = arr2.slice(); // make a copy
-    left.sort((a, b) => a - b);
-    right.sort((a, b) => a - b);
+    if (typeof left[0] === typeof 1) {
+        left.sort((a, b) => a - b);
+        right.sort((a, b) => a - b);
+    } else {
+        left.sort();
+        right.sort();
+    }
     for (let i = 0; i < left.length; i++) {
         if (typeof left[i] !== typeof right[i]) return false;
         if (Array.isArray(left[i])) {
