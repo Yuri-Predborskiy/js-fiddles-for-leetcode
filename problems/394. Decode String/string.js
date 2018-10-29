@@ -3,37 +3,43 @@
  * @return {string}
  */
 let decodeString = function(s) {
-    let res = '', repeats = '';
-    for (let i = 0; i < s.length; i++) {
-        let code = s.charCodeAt(i);
-        if (code >= 48 && code <= 57) {
-            // number
-            repeats += s[i];
-            continue;
-        }
-        if (code === 91) {
-            // [, opening bracket, start of fragment
-            let fragment = decodeString(s.substring(i + 1));
-            for (let j = 0; j < Number.parseInt(repeats); j++) {
-                res += fragment;
-            }
-            i += repeats.length + fragment.length;
-            repeats = '';
-            continue;
-        }
-        if (code === 93) {
-            // ], closing bracket, end of fragment
-            return res; // exit recursive function
-        }
+    let i = 0;
 
-        res += s[i];
+    function decodeStringRecursion(s) {
+        let res = '', repeats = '';
+        while (i < s.length) {
+            let code = s.charCodeAt(i);
+            if (code >= 48 && code <= 57) {
+                // number
+                repeats += s[i++];
+                continue;
+            }
+            if (code === 91) {
+                // [, opening bracket, start of fragment
+                i++;
+                let fragment = decodeStringRecursion(s);
+                for (let j = 0; j < Number.parseInt(repeats); j++) {
+                    res += fragment;
+                }
+                repeats = '';
+                continue;
+            }
+            if (code === 93) {
+                // ], closing bracket, end of fragment
+                i++;
+                return res; // exit recursive function
+            }
+
+            res += s[i++];
+        }
+        return res;
     }
 
-    return res;
+    return decodeStringRecursion(s);
 };
 
 let tests = [
-    { param: ['a3[b3[d]]c'], ans: 'abbbbbbbbbc' },
+    { param: ['a3[b3[d]]c'], ans: 'abdddbdddbdddc' },
     { param: ['3[a]2[bc]'], ans: 'aaabcbc' },
     { param: ['3[a2[c]]'], ans: 'accaccacc' },
     { param: ['2[abc]3[cd]ef'], ans: 'abcabccdcdcdef' },
