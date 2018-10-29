@@ -67,10 +67,10 @@ RandomizedSet.prototype.getRandom = function() {
 
 /**
  * Your RandomizedSet object will be instantiated and called as such:
- * var obj = Object.create(RandomizedSet).createNew()
- * var param_1 = obj.insert(val)
- * var param_2 = obj.remove(val)
- * var param_3 = obj.getRandom()
+ * let obj = Object.create(RandomizedSet).createNew()
+ * let param_1 = obj.insert(val)
+ * let param_2 = obj.remove(val)
+ * let param_3 = obj.getRandom()
  */
 
 let col = new RandomizedSet();

@@ -44,9 +44,9 @@ MyHashMap.prototype.remove = function(key) {
 
 /**
  * Your MyHashMap object will be instantiated and called as such:
- * var obj = Object.create(MyHashMap).createNew()
+ * let obj = Object.create(MyHashMap).createNew()
  * obj.put(key,value)
- * var param_2 = obj.get(key)
+ * let param_2 = obj.get(key)
  * obj.remove(key)
  */
 

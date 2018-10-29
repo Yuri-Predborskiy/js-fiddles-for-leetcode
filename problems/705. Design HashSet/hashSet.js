@@ -40,10 +40,10 @@ MyHashSet.prototype.contains = function(key) {
 
 /**
  * Your MyHashSet object will be instantiated and called as such:
- * var obj = Object.create(MyHashSet).createNew()
+ * let obj = Object.create(MyHashSet).createNew()
  * obj.add(key)
  * obj.remove(key)
- * var param_3 = obj.contains(key)
+ * let param_3 = obj.contains(key)
  */
 
 function check(calculated, checkValue) {
