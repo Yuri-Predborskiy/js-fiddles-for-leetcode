@@ -68,10 +68,11 @@ let numIslands = function(grid) {
         ) {
             return;
         }
-        visited[row][col] = true;
+
         if (grid[row][col] == 1) {
             landQueue.enQueue({row, col});
         } else {
+            visited[row][col] = true;
             seaQueue.enQueue({row, col});
         }
     }
@@ -80,6 +81,7 @@ let numIslands = function(grid) {
         islands++;
         while (!landQueue.isEmpty()) {
             let {row, col} = landQueue.deQueue();
+            visited[row][col] = true;
             processNeighbours(row, col);
         }
     }
@@ -104,6 +106,8 @@ let numIslands = function(grid) {
         }
         if (!seaQueue.isEmpty()) {
             let {row, col} = seaQueue.deQueue();
+            // check for land after each neighbour
+            // this way you can guarantee unique islands
             processNeighbours(row, col);
         }
     }
@@ -145,7 +149,7 @@ let tests = [
             ],
             50 //removed
         ],
-        ans: 58 // should be 8
+        ans: 1 // should be 8
     },
     {
         params: [
