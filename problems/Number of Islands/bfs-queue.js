@@ -1,32 +1,5 @@
-
-// todo: fix bug
-// bug
-// when you find one island from the sea from 2 points, it gets added to land queue
-// land is not processed immediately, it gets processed one item at a time
-// adding 2 pieces of the same island to land queue results in processing these two pieces as two independent land pieces
-
-// solution overview
-// bug happens because we add two things to land from sea, and then process one land item at a time
-// solution: don't mark land as visited
-// solution: change how many tiles your process before taking further actions (instead of processing 4 items, process 1 at a time)
-
-// solution 1
-// mark item as visited for sea only, re-process land tiles (needs more time, as some tiles will be processed multiple times)
-
-// solution 2
-// simplify
-// make two crawlers
-// one crawler for next item in general
-// second crawler for next island item
-// process one item at a time
-// processed 1 tile, if it is land, process island
-// if it is sea, add it to queue and continue
-// crawler - counter that keeps current shift in closure
-//      next item is in carousel U R D L (row -1, col + 1, row + 1, col -1)
-//      potential simplification: using row.length and col.length and index
-
 /**
- * @param {number[][]} grid
+ * @param {string[][]} grid
  * @return {number}
  */
 let numIslands = function(grid) {
@@ -58,7 +31,7 @@ let numIslands = function(grid) {
         return this.head === null;
     };
 
-    function processItem(row, col) {
+    function processItem(row, col, queue = items) {
         if (
             row >= grid.length ||
             row < 0 ||
@@ -69,94 +42,89 @@ let numIslands = function(grid) {
             return;
         }
 
-        if (grid[row][col] == 1) {
-            landQueue.enQueue({row, col});
+        if (grid[row][col] === '1') {
+            queue.enQueue({row, col});
         } else {
             visited[row][col] = true;
-            seaQueue.enQueue({row, col});
+            items.enQueue({row, col});
         }
     }
 
     function processIsland() {
         islands++;
-        while (!landQueue.isEmpty()) {
+        do {
             let {row, col} = landQueue.deQueue();
             visited[row][col] = true;
-            processNeighbours(row, col);
-        }
+            processNeighbours(row, col, landQueue);
+        } while (!landQueue.isEmpty());
     }
 
-    function processNeighbours(row, col) {
-        processItem(row - 1, col);
-        processItem(row + 1, col);
-        processItem(row, col - 1);
-        processItem(row, col + 1);
+    function processNeighbours(row, col, queue) {
+        processItem(row - 1, col, queue);
+        processItem(row + 1, col, queue);
+        processItem(row, col - 1, queue);
+        processItem(row, col + 1, queue);
     }
 
-    let seaQueue = new Queue(), landQueue = new Queue(), visited = [], islands = 0;
+    let items = new Queue(), landQueue = new Queue(), visited = [], islands = 0;
     for (let i = 0; i < grid.length; i++) {
         visited[i] = [];
     }
 
     processItem(0, 0);
-
-    while (!landQueue.isEmpty() || !seaQueue.isEmpty()) {
-        if (!landQueue.isEmpty()) {
+    while (!items.isEmpty()) {
+        let {row, col} = items.deQueue();
+        if (grid[row][col] === '1' && !visited[row][col]) {
+            landQueue.enQueue({row, col});
             processIsland();
-        }
-        if (!seaQueue.isEmpty()) {
-            let {row, col} = seaQueue.deQueue();
-            // check for land after each neighbour
-            // this way you can guarantee unique islands
-            processNeighbours(row, col);
+        } else {
+            visited[row][col] = true;
+            processNeighbours(row, col)
         }
     }
 
     return islands;
 };
 
-/* original array with 58 as ans
-[
-["1","0","0","1","1","1","0","1","1","0","0","0","0","0","0","0","0","0","0","0"],
-["1","0","0","1","1","0","0","1","0","0","0","1","0","1","0","1","0","0","1","0"],
-["0","0","0","1","1","1","1","0","1","0","1","1","0","0","0","0","1","0","1","0"],
-["0","0","0","1","1","0","0","1","0","0","0","1","1","1","0","0","1","0","0","1"],
-["0","0","0","0","0","0","0","1","1","1","0","0","0","0","0","0","0","0","0","0"],
-["1","0","0","0","0","1","0","1","0","1","1","0","0","0","0","0","0","1","0","1"],
-["0","0","0","1","0","0","0","1","0","1","0","1","0","1","0","1","0","1","0","1"],
-["0","0","0","1","0","1","0","0","1","1","0","1","0","1","1","0","1","1","1","0"],
-["0","0","0","0","1","0","0","1","1","0","0","0","0","1","0","0","0","1","0","1"],
-["0","0","1","0","0","1","0","0","0","0","0","1","0","0","1","0","0","0","1","0"],
-["1","0","0","1","0","0","0","0","0","0","0","1","0","0","1","0","1","0","1","0"],
-["0","1","0","0","0","1","0","1","0","1","1","0","1","1","1","0","1","1","0","0"],
-["1","1","0","1","0","0","0","0","1","0","0","0","0","0","0","1","0","0","0","1"],
-["0","1","0","0","1","1","1","0","0","0","1","1","1","1","1","0","1","0","0","0"],
-["0","0","1","1","1","0","0","0","1","1","0","0","0","1","0","1","0","0","0","0"],
-["1","0","0","1","0","1","0","0","0","0","1","0","0","0","1","0","1","0","1","1"],
-["1","0","1","0","0","0","0","0","0","1","0","0","0","1","0","1","0","0","0","0"],
-["0","1","1","0","0","0","1","1","1","0","1","0","1","0","1","1","1","1","0","0"],
-["0","1","0","0","0","0","1","1","0","0","1","0","1","0","0","1","0","0","1","1"],
-["0","0","0","0","0","0","1","1","1","1","0","1","0","0","0","1","1","0","0","0"]
-]
+/*
+    todo: fix memory limit exceeded.
+    probably bfs / queue with large enough island causes memory limit problem
  */
 
 let tests = [
     {
         params: [
             [
-                ["0","1"],
-                ["1","1"],
+                ['1','0','0','1','1','1','0','1','1','0','0','0','0','0','0','0','0','0','0','0'],
+                ['1','0','0','1','1','0','0','1','0','0','0','1','0','1','0','1','0','0','1','0'],
+                ['0','0','0','1','1','1','1','0','1','0','1','1','0','0','0','0','1','0','1','0'],
+                ['0','0','0','1','1','0','0','1','0','0','0','1','1','1','0','0','1','0','0','1'],
+                ['0','0','0','0','0','0','0','1','1','1','0','0','0','0','0','0','0','0','0','0'],
+                ['1','0','0','0','0','1','0','1','0','1','1','0','0','0','0','0','0','1','0','1'],
+                ['0','0','0','1','0','0','0','1','0','1','0','1','0','1','0','1','0','1','0','1'],
+                ['0','0','0','1','0','1','0','0','1','1','0','1','0','1','1','0','1','1','1','0'],
+                ['0','0','0','0','1','0','0','1','1','0','0','0','0','1','0','0','0','1','0','1'],
+                ['0','0','1','0','0','1','0','0','0','0','0','1','0','0','1','0','0','0','1','0'],
+                ['1','0','0','1','0','0','0','0','0','0','0','1','0','0','1','0','1','0','1','0'],
+                ['0','1','0','0','0','1','0','1','0','1','1','0','1','1','1','0','1','1','0','0'],
+                ['1','1','0','1','0','0','0','0','1','0','0','0','0','0','0','1','0','0','0','1'],
+                ['0','1','0','0','1','1','1','0','0','0','1','1','1','1','1','0','1','0','0','0'],
+                ['0','0','1','1','1','0','0','0','1','1','0','0','0','1','0','1','0','0','0','0'],
+                ['1','0','0','1','0','1','0','0','0','0','1','0','0','0','1','0','1','0','1','1'],
+                ['1','0','1','0','0','0','0','0','0','1','0','0','0','1','0','1','0','0','0','0'],
+                ['0','1','1','0','0','0','1','1','1','0','1','0','1','0','1','1','1','1','0','0'],
+                ['0','1','0','0','0','0','1','1','0','0','1','0','1','0','0','1','0','0','1','1'],
+                ['0','0','0','0','0','0','1','1','1','1','0','1','0','0','0','1','1','0','0','0']
             ],
-            50 //removed
         ],
-        ans: 1 // should be 8
+        ans: 58
     },
     {
         params: [
             [
-                ["0","1","0"],
-                ["1","0","1"],
-                ["0","1","0"],
+                ['0','1','0'],
+                ['1','0','1'],
+                ['0','1','0'],
             ],
         ],
         ans: 4
@@ -164,10 +132,10 @@ let tests = [
     {
         params: [
             [
-                [1,1,1,1,0],
-                [1,1,0,1,0],
-                [1,1,0,0,0],
-                [0,0,0,0,0],
+                ['1','1','1','1','0'],
+                ['1','1','0','1','0'],
+                ['1','1','0','0','0'],
+                ['0','0','0','0','0'],
             ],
         ],
         ans: 1
@@ -175,10 +143,10 @@ let tests = [
     {
         params: [
             [
-                [1,1,1,1,0],
-                [1,1,0,1,0],
-                [1,1,0,0,1],
-                [0,0,1,1,1],
+                ['1','1','1','1','0'],
+                ['1','1','0','1','0'],
+                ['1','1','0','0','1'],
+                ['0','0','1','1','1'],
             ],
         ],
         ans: 2
@@ -186,10 +154,10 @@ let tests = [
     {
         params: [
             [
-                [1,1,0,0,0],
-                [1,1,0,0,0],
-                [0,0,1,0,0],
-                [0,0,0,1,1],
+                ['1','1','0','0','0'],
+                ['1','1','0','0','0'],
+                ['0','0','1','0','0'],
+                ['0','0','0','1','1'],
             ],
         ],
         ans: 3 // 3 separate groups of 1s that have 0 around them (up left right bottom)
