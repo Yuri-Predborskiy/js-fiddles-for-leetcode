@@ -11,7 +11,7 @@ let numIslands = function(grid) {
     function Queue() {
         this.head = this.tail = null;
     }
-    Queue.prototype.enQueue = function(val) {
+    Queue.prototype.push = function(val) {
         if (this.isEmpty()) {
             this.head = this.tail = new ListNode(val);
         } else {
@@ -19,7 +19,7 @@ let numIslands = function(grid) {
             this.tail = this.tail.next;
         }
     };
-    Queue.prototype.deQueue = function() {
+    Queue.prototype.pop = function() {
         if (this.isEmpty()) {
             return null;
         }
@@ -31,67 +31,75 @@ let numIslands = function(grid) {
         return this.head === null;
     };
 
-    function processItem(row, col, queue = items) {
-        if (
-            row >= grid.length ||
-            row < 0 ||
-            col >= grid[0].length ||
-            col < 0 ||
-            visited[row][col]
-        ) {
-            return;
+    function processIsland(i) {
+        function isInBounds(row, col) {
+            return (
+                row < grid.length &&
+                row >= 0 &&
+                col < grid[0].length &&
+                col >= 0
+            );
         }
 
-        if (grid[row][col] === '1') {
-            queue.enQueue({row, col});
-        } else {
-            visited[row][col] = true;
-            items.enQueue({row, col});
-        }
-    }
-
-    function processIsland() {
         islands++;
-        do {
-            let {row, col} = landQueue.deQueue();
-            visited[row][col] = true;
-            processNeighbours(row, col, landQueue);
-        } while (!landQueue.isEmpty());
+        visited[i] = true;
+        let lands = new Queue();
+        lands.push(i);
+        while (!lands.isEmpty()) {
+            let i = lands.pop();
+            let {row, col} = indexToRowCol(i);
+            if (isInBounds(row, col - 1) && isItUnvisitedLand(i - 1)) { // left
+                lands.push(i - 1);
+                visited[i - 1] = true;
+            }
+            if (isInBounds(row - 1, col) && isItUnvisitedLand(i - cl)) { // top
+                lands.push(i - cl);
+                visited[i - cl] = true;
+            }
+            if (isInBounds(row, col + 1) && isItUnvisitedLand(i + 1)) { // right
+                lands.push(i + 1);
+                visited[i + 1] = true;
+            }
+            if (isInBounds(row + 1, col) && isItUnvisitedLand(i + cl)) { // bottom
+                lands.push(i + cl);
+                visited[i + cl] = true;
+            }
+        }
     }
 
-    function processNeighbours(row, col, queue) {
-        processItem(row - 1, col, queue);
-        processItem(row + 1, col, queue);
-        processItem(row, col - 1, queue);
-        processItem(row, col + 1, queue);
+    let visited = [], islands = 0;
+
+    function indexToRowCol(i) {
+        return {row: Math.floor(i / cl), col: i % cl};
     }
 
-    let items = new Queue(), landQueue = new Queue(), visited = [], islands = 0;
-    for (let i = 0; i < grid.length; i++) {
-        visited[i] = [];
+    function isItUnvisitedLand(i) {
+        let {row, col} = indexToRowCol(i);
+        return !visited[i] && grid[row][col] === '1';
     }
 
-    processItem(0, 0);
-    while (!items.isEmpty()) {
-        let {row, col} = items.deQueue();
-        if (grid[row][col] === '1' && !visited[row][col]) {
-            landQueue.enQueue({row, col});
-            processIsland();
-        } else {
-            visited[row][col] = true;
-            processNeighbours(row, col)
+    let cl = grid[0].length, maxLength = grid.length * cl;
+    for (let i = 0; i < maxLength; i++) {
+        if (isItUnvisitedLand(i)) {
+            processIsland(i);
         }
     }
 
     return islands;
 };
 
-/*
-    todo: fix memory limit exceeded.
-    probably bfs / queue with large enough island causes memory limit problem
- */
-
 let tests = [
+    {
+        params: [
+            [
+                ['1', '1', '1', '1'],
+                ['1', '1', '1', '1'],
+                ['1', '1', '0', '0'],
+                ['1', '1', '0', '1'],
+            ]
+        ],
+        ans: 2,
+    },
     {
         params: [
             [
@@ -118,6 +126,33 @@ let tests = [
             ],
         ],
         ans: 58
+    },
+    {
+        params: [
+            [
+                ["1","1","1","1","1","0","1","1","1","1","1","1","1","1","1","0","1","0","1","1"],
+                ["0","1","1","1","1","1","1","1","1","1","1","1","1","0","1","1","1","1","1","0"],
+                ["1","0","1","1","1","0","0","1","1","0","1","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","0","1","1","1","1","1","1","0","1","1","1","0","1","1","1","0","1","1","1"],
+                ["0","1","1","1","1","1","1","1","1","1","1","1","0","1","1","0","1","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","0","1","1","1","1","0","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","0","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["0","1","1","1","1","1","1","1","0","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","1","0","1","1","1","1","1","1","1","0","1","1","1","1","1","1"],
+                ["1","0","1","1","1","1","1","0","1","1","1","0","1","1","1","1","0","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","0","1","1","1","1","1","1","0"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","0","1","1","1","1","0","0"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+                ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+            ],
+        ],
+        ans: 1
     },
     {
         params: [
