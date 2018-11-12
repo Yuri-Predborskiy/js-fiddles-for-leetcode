@@ -7,7 +7,7 @@ let openLock = function(deadends, target) {
     let steps = 0, combos = [], tried = new Set(deadends);
 
     if (!tried.has('0000')) combos.push('0000');
-    while (!combos.length > 0) {
+    while (combos.length > 0) {
         steps++;
         let nextCombos = [];
         for (let i = 0; i < combos.length; i++) {
