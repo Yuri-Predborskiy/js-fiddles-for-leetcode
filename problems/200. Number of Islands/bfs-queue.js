@@ -31,56 +31,53 @@ let numIslands = function(grid) {
         return this.head === null;
     };
 
-    function processIsland(i) {
-        function isInBounds(row, col) {
-            return (
-                row < grid.length &&
-                row >= 0 &&
-                col < grid[0].length &&
-                col >= 0
-            );
-        }
-
+    function processIsland(startIndex) {
         islands++;
-        visited[i] = true;
         let lands = new Queue();
-        lands.push(i);
+        lands.push(startIndex);
+        visited[startIndex] = true;
         while (!lands.isEmpty()) {
             let i = lands.pop();
             let {row, col} = indexToRowCol(i);
-            if (isInBounds(row, col - 1) && isItUnvisitedLand(i - 1)) { // left
+            if (isUnvisitedLand(row, col - 1)) { // left
                 lands.push(i - 1);
                 visited[i - 1] = true;
             }
-            if (isInBounds(row - 1, col) && isItUnvisitedLand(i - cl)) { // top
-                lands.push(i - cl);
-                visited[i - cl] = true;
+            if (isUnvisitedLand(row - 1, col)) { // up
+                lands.push(i - columnLength);
+                visited[i - columnLength] = true;
             }
-            if (isInBounds(row, col + 1) && isItUnvisitedLand(i + 1)) { // right
+            if (isUnvisitedLand(row, col + 1)) { // right
                 lands.push(i + 1);
                 visited[i + 1] = true;
             }
-            if (isInBounds(row + 1, col) && isItUnvisitedLand(i + cl)) { // bottom
-                lands.push(i + cl);
-                visited[i + cl] = true;
+            if (isUnvisitedLand(row + 1, col)) { // down
+                lands.push(i + columnLength);
+                visited[i + columnLength] = true;
             }
         }
     }
 
-    let visited = [], islands = 0;
-
     function indexToRowCol(i) {
-        return {row: Math.floor(i / cl), col: i % cl};
+        return {row: Math.floor(i / columnLength), col: i % columnLength};
     }
 
-    function isItUnvisitedLand(i) {
-        let {row, col} = indexToRowCol(i);
-        return !visited[i] && grid[row][col] === '1';
+    function isUnvisitedLand(row, col) {
+        return (
+            row < grid.length &&
+            row >= 0 &&
+            col < grid[0].length &&
+            col >= 0 &&
+            !visited[col + row * columnLength] &&
+            grid[row][col] === '1'
+        );
     }
 
-    let cl = grid[0].length, maxLength = grid.length * cl;
+    let visited = [], islands = 0;
+    let columnLength = grid[0].length, maxLength = grid.length * columnLength;
     for (let i = 0; i < maxLength; i++) {
-        if (isItUnvisitedLand(i)) {
+        let {row, col} = indexToRowCol(i);
+        if (isUnvisitedLand(row, col)) {
             processIsland(i);
         }
     }
