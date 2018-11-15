@@ -114,6 +114,11 @@ function log(loggingEnabledBoolean = false, first, ...rest) {
     }
 }
 
+function UndirectedGraphNode(label) {
+    this.label = label;
+    this.neighbors = [];   // Array of UndirectedGraphNode
+}
+
 module.exports = {
     compareArrays,
     ListNode,
@@ -131,4 +136,5 @@ module.exports = {
     reducerArraySum,
     log,
     loggingStateBoolean,
+    UndirectedGraphNode,
 };
