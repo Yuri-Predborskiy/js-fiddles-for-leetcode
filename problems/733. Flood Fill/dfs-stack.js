@@ -26,19 +26,15 @@ let floodFill = function(image, sr, sc, newColor) {
         visited[row*rowLen + col] = true;
         if (isSameColor(row, col - 1)) { // left
             stack.push([row, col - 1]);
-            visited[row*rowLen + col] = true;
         }
         if (isSameColor(row - 1, col)) { // up
             stack.push([row - 1, col]);
-            visited[row*rowLen + col] = true;
         }
         if (isSameColor(row, col + 1)) { // right
             stack.push([row, col + 1]);
-            visited[row*rowLen + col] = true;
         }
         if (isSameColor(row + 1, col)) { // down
             stack.push([row + 1, col]);
-            visited[row*rowLen + col] = true;
         }
     }
     return image;
