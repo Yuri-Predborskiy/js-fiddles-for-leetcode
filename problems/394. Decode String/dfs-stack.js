@@ -3,76 +3,33 @@
  * @return {string}
  */
 let decodeString = function(s) {
-    function isNumber(string) {
-        return !isNaN(Number.parseInt(string));
-    }
-    function repeatStringNTimes(string, repeats) {
-        let temp = '';
-        while (repeats-- > 0) {
-            temp += string;
-        }
-        return temp;
-    }
-    function getPrevString() {
-        if (stack.length > 0 && !isNumber(stack[stack.length - 1])) {
-            return stack.pop();
-        }
-        return '';
-    }
-
     if (s.length < 1) return '';
 
-    let stack = [], tempWord = '', tempNum = '';
+    let stack = [];
     for (let i = 0; i < s.length; i++) {
-        if (isNumber(s[i])) {
-            if (tempWord) {
-                stack.push(tempWord);
-                tempWord = '';
+        if (s[i] !== ']') {
+            stack.push(s[i]);
+        } else {
+            let tempWord = '';
+            while (stack[stack.length - 1] !== '[') {
+                tempWord = stack.pop() + tempWord;
             }
-            tempNum += s[i];
-            continue;
-        } else if (s[i] === '[') {
-            stack.push(Number.parseInt(tempNum));
-            tempNum = '';
-            continue;
-        } else if (s[i] === ']') {
-            let num = stack.pop();
-            tempWord = getPrevString() + repeatStringNTimes(tempWord, num);
-            continue;
+            stack.pop();
+            let repeats = '';
+            while (!isNaN(Number.parseInt(stack[stack.length - 1]))) {
+                repeats = stack.pop() + repeats;
+            }
+            repeats = Number.parseInt(repeats);
+            while (repeats-- > 0) {
+                stack.push(tempWord);
+            }
         }
-        tempWord += s[i];
     }
-
-    return stack.join() + tempWord;
+    return stack.join('');
 };
 
 let tests = [
-    // 'a2[b3[d]]c'
-    // 3 - repeats, b - stack, 3 - repeats, repeats become 33, bug
-    // a - stack letter
-    // 2 - stack
-    // [ - stack it
-    // b - stack letter
-    // 3 - stack
-    // [ - stack it
-    // d - stack letter
-    // ] - initiate while, till we reach [
-    // once we found '[', pop one more item, pop k (number), and repeat accumulated string k times, then pop one more
-    //  item from stack and push (prev_item + multiplied string)
-    //  word becomes ddd
-    //  push 'ddd' into stack
-    // ] - initiate while
-    //  pop items from stack till you find [, accumulate temp string
-    //  temp string is bddd
-    //  pop next item - 2
-    //  repeat bddd 2 times, it becomes bddd bddd
-    //  pop next item (a), push (a + bddd bddd) into stack
-    // c - push to stack
-    // finished working through string
-    // join the stack
-    // result: a bddd bddd c
-
-    // { params: ['a3[b3[d]]c'], ans: 'abdddbdddbdddc' },
+    { params: ['a3[b3[d]]c'], ans: 'abdddbdddbdddc' },
     { params: ['3[a]2[bc]'], ans: 'aaabcbc' },
     { params: ['3[a2[c]]'], ans: 'accaccacc' },
     { params: ['2[abc]3[cd]ef'], ans: 'abcabccdcdcdef' },
