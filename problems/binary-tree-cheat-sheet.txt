@@ -1,0 +1,28 @@
+Binary Tree
+
+Preorder Traversal
+root, left, right
+
+In-order Traversal
+left, root, right
+
+Post-order Traversal
+left, right, root
+
+Recursive (preorder):
+function calculate(root) {
+    return root.val + calculate(left) + calculate(right)
+}
+
+Recursive (preorder) while putting everything into external array:
+function traverse(root) {
+    function calc(root) {
+    }
+        arr.push(root.val);
+        if (root.left) calc(root.left);
+        if (root.right) calc(root.right);
+    }
+    let arr = [];
+    if (root) calc(root);
+    return arr;
+}

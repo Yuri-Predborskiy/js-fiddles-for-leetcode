@@ -33,6 +33,23 @@ function compareRandomLinkedLists(list1, list2) {
     return val1 === val2;
 }
 
+// todo: implement, work in progress
+function convertArrayToBinaryTree(array) {
+    // function calc() {
+    //
+    //     return root;
+    // }
+    // let root = new TreeNode(null);
+    //
+    // // todo: process array and turn it into a tree using preorder traversal formula
+    // for (let i = 0; i < array.length; i++) {
+    //     root.val = array[i];
+    // }
+    // if (array.length) root.val = array[0];
+    // // process the array adding each element as either left or right branch to the tree, null when the branch ends
+    // return root;
+}
+
 function compareBinaryTrees(tree1, tree2) {
     let val1 = convertBinaryTreeToString(tree1);
     let val2 = convertBinaryTreeToString(tree2);
@@ -126,6 +143,7 @@ module.exports = {
     TreeNode,
     compareLinkedLists,
     compareRandomLinkedLists,
+    convertArrayToBinaryTree,
     compareBinaryTrees,
     convertBinaryTreeToString,
     createLinkedList,
