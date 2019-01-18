@@ -57,4 +57,9 @@ function transformArrayToTreeIteratively(array) {
 let iterative1 = transformArrayToTreeIteratively(arr1);
 let iterative2 = transformArrayToTreeIteratively(arr2);
 
+console.log(recursive1);
+console.log(recursive2);
+console.log(iterative1);
+console.log(iterative2);
+
 console.log('done'); // anchor point for debugging and comparing results
