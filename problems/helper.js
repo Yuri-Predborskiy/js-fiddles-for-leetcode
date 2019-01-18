@@ -35,19 +35,26 @@ function compareRandomLinkedLists(list1, list2) {
 
 // todo: implement, work in progress
 function convertArrayToBinaryTree(array) {
-    // function calc() {
-    //
-    //     return root;
-    // }
-    // let root = new TreeNode(null);
-    //
-    // // todo: process array and turn it into a tree using preorder traversal formula
-    // for (let i = 0; i < array.length; i++) {
-    //     root.val = array[i];
-    // }
-    // if (array.length) root.val = array[0];
-    // // process the array adding each element as either left or right branch to the tree, null when the branch ends
-    // return root;
+    function addBranch(root, branch) {
+        if (index >= array.length) return;
+        stack.push({root, branch});
+    }
+
+    if (!array.length) return null;
+
+    let tree = new TreeNode(array[0]), index = 0, stack = [];
+    // for stack (LIFO) and binary tree, right branch should be added first
+    addBranch(tree, 'right');
+    addBranch(tree, 'left');
+
+    while (stack.length && ++index < array.length) {
+        let {root, branch} = stack.pop();
+        if (array[index] === null) continue;
+        root[branch] = new TreeNode(array[index]);
+        addBranch(root[branch], 'right');
+        addBranch(root[branch], 'left');
+    }
+    return tree;
 }
 
 function compareBinaryTrees(tree1, tree2) {
