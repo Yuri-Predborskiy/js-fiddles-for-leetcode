@@ -1,19 +1,38 @@
 let loggingStateBoolean = false;
 
+// compare arrays where order does not matter
 function compareArrays(arr1, arr2) {
-    if (typeof arr1 !== typeof arr2 || typeof arr1 !== typeof [] || arr1.length !== arr2.length) return false;
+    if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) return false;
     let left = arr1.slice(), right = arr2.slice(); // make a copy
-    if (typeof left[0] === typeof 1) {
-        left.sort((a, b) => a - b);
-        right.sort((a, b) => a - b);
-    } else {
+    if (typeof left[0] !== 'number') {
         left.sort();
         right.sort();
+    } else {
+        left.sort((a, b) => a - b);
+        right.sort((a, b) => a - b);
     }
     for (let i = 0; i < left.length; i++) {
         if (typeof left[i] !== typeof right[i]) return false;
         if (Array.isArray(left[i])) {
             if (!compareArrays(left[i], right[i])) return false;
+        } else {
+            if (left[i] !== right[i]) return false;
+        }
+    }
+    return true;
+}
+
+// compare arrays without sorting, for number arrays
+function compareNumberArrays(arr1, arr2) {
+    if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) return false;
+    let left = arr1.slice(), right = arr2.slice(); // make a copy
+    if (typeof left[0] !== 'number') {
+        return false; // cannot be used to compare anything other than numbers
+    }
+    for (let i = 0; i < left.length; i++) {
+        if (typeof left[i] !== typeof right[i]) return false;
+        if (Array.isArray(left[i])) {
+            if (!compareNumberArrays(left[i], right[i])) return false;
         } else {
             if (left[i] !== right[i]) return false;
         }
@@ -33,7 +52,7 @@ function compareRandomLinkedLists(list1, list2) {
     return val1 === val2;
 }
 
-// todo: implement, work in progress
+// may not work correctly in some cases, in these cases create tree by hand, example in 144, easy-to-read version
 function convertArrayToBinaryTree(array) {
     function addBranch(root, branch) {
         if (index >= array.length) return;
@@ -145,6 +164,7 @@ function UndirectedGraphNode(label) {
 
 module.exports = {
     compareArrays,
+    compareNumberArrays,
     ListNode,
     RandomListNode,
     TreeNode,
