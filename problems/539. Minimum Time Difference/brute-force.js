@@ -1,3 +1,11 @@
+/*
+Solution using brute force - loop over all elements for each element.
+Very inefficient due to limitations of the task:
+there may be up to 20.000 elements in inputs, but there may be only 1440 unique elements.
+Optimization applied - once a "zero" difference is found, return 0.
+
+Time complexity is O(n^2) which can be improved at least to O(n*log(n)).
+ */
 /**
  * @param {string[]} timePoints
  * @return {number}
