@@ -1,5 +1,19 @@
 let loggingStateBoolean = false;
 
+// compare arrays where order is important
+function compareArraysStrict(left, right) {
+    if (typeof left !== typeof right || !Array.isArray(left) || left.length !== right.length) {
+        return false;
+    }
+
+    for (let i = 0; i < left.length; i++) {
+        if (typeof left[i] !== typeof right[i] || left[i] !== right[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // compare arrays where order does not matter
 function compareArrays(arr1, arr2) {
     if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) return false;
@@ -163,6 +177,7 @@ function UndirectedGraphNode(label) {
 }
 
 module.exports = {
+    compareArraysStrict,
     compareArrays,
     compareNumberArrays,
     ListNode,
