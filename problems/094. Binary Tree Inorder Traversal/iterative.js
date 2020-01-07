@@ -12,19 +12,32 @@ const {TreeNode, compareArraysStrict} = require('../helper');
  * @return {number[]}
  */
 let inorderTraversal = function(root) {
-    function processNode(node) {
-        if (node.left) {
-            processNode(node.left);
-        }
-        output.push(node.val);
-        if (node.right) {
-            processNode(node.right);
-        }
+    const output = [];
+    const stack = [];
+    const visited = new Set();
+
+    if (root) {
+        stack.push(root);
     }
 
-    const output = [];
-    if (root) {
-        processNode(root);
+    while (stack.length > 0) {
+        const node = stack.pop();
+
+        if (visited.has(node)) {
+            output.push(node.val);
+            continue;
+        }
+        visited.add(node);
+
+        if (node.right) {
+            stack.push(node.right);
+        }
+
+        stack.push(node);
+
+        if (node.left) {
+            stack.push(node.left);
+        }
     }
 
     return output;
