@@ -59,7 +59,7 @@ let tests = [
 ];
 
 tests.forEach(test => {
-    let res = connect(...test.params);
-    let correct = compareArrays(serializeTreeWithRightLink(res), test.ans);
-    console.log(`expected: '${test.ans}' | calculated: '${serializeTreeWithRightLink(res)}' | result is`, correct ? 'CORRECT' : 'WRONG!');
+    let res = serializeTreeWithRightLink(connect(...test.params));
+    let correct = compareArrays(res, test.ans);
+    console.log(`expected: '${test.ans}' | calculated: '${res}' | result is`, correct ? 'CORRECT' : 'WRONG!');
 });
