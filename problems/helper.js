@@ -16,7 +16,9 @@ function compareArraysStrict(left, right) {
 
 // compare arrays where order does not matter
 function compareArrays(arr1, arr2) {
-    if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) return false;
+    if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) {
+        return false;
+    }
     let left = arr1.slice(), right = arr2.slice(); // make a copy
     if (typeof left[0] !== 'number') {
         left.sort();
@@ -143,6 +145,11 @@ function TreeNode(val) {
     this.left = this.right = null;
 }
 
+function TreeNodeWithNext(val) {
+    this.val = val;
+    this.left = this.right = this.next = null;
+}
+
 function createLinkedList(values) {
     let head = new ListNode(values[0]), next = head;
     for (let i = 1; i < values.length; i++) {
@@ -176,6 +183,39 @@ function UndirectedGraphNode(label) {
     this.neighbors = [];   // Array of UndirectedGraphNode
 }
 
+function serializeTreeWithRightLink(root) {
+    function serialize(node) {
+        if (visited.has(node)) {
+            return;
+        }
+        while (node) {
+            output.push(node.val);
+            visited.add(node);
+            node = node.next;
+        }
+        output.push('#');
+    }
+
+    const output = [];
+    const visited = new Set();
+    const stack = [root];
+    if (!root) {
+        return output;
+    }
+
+    while (stack.length) {
+        const node = stack.pop();
+        serialize(node);
+        if (node.right) {
+            stack.push(node.right);
+        }
+        if (node.left) {
+            stack.push(node.left);
+        }
+    }
+    return output;
+}
+
 module.exports = {
     compareArraysStrict,
     compareArrays,
@@ -183,6 +223,7 @@ module.exports = {
     ListNode,
     RandomListNode,
     TreeNode,
+    TreeNodeWithNext,
     compareLinkedLists,
     compareRandomLinkedLists,
     convertArrayToBinaryTree,
@@ -197,4 +238,5 @@ module.exports = {
     log,
     loggingStateBoolean,
     UndirectedGraphNode,
+    serializeTreeWithRightLink,
 };
