@@ -151,10 +151,10 @@ function TreeNodeWithNext(val) {
 }
 
 function createLinkedList(values) {
-    let head = new ListNode(values[0]), next = head;
+    let head = new ListNode(values[0]), node = head;
     for (let i = 1; i < values.length; i++) {
-        next.next = new ListNode(values[i]);
-        next = next.next;
+        node.next = new ListNode(values[i]);
+        node = node.next;
     }
     return head;
 }
