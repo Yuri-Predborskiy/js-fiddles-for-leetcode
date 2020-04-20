@@ -68,7 +68,7 @@ function compareRandomLinkedLists(list1, list2) {
     return val1 === val2;
 }
 
-// may not work correctly in some cases, in these cases create tree by hand, example in 144, easy-to-read version
+// preorder traversal
 function convertArrayToBinaryTree(array) {
     function addBranch(root, branch) {
         if (index >= array.length) return;
@@ -90,6 +90,37 @@ function convertArrayToBinaryTree(array) {
         addBranch(root[branch], 'left');
     }
     return tree;
+}
+
+// preorder traversal
+function convertBinaryTreeToArray(root) {
+    const output = [];
+    const stack = [];
+    const visited = new Set();
+
+    if (root) {
+        stack.push(root);
+    }
+
+    while (stack.length > 0) {
+        const node = stack.pop();
+
+        if (visited.has(node)) {
+            output.push(node.val);
+            continue;
+        }
+        visited.add(node);
+
+        if (node.right) {
+            stack.push(node.right);
+        }
+        if (node.left) {
+            stack.push(node.left);
+        }
+        stack.push(node);
+    }
+
+    return output;
 }
 
 function compareBinaryTrees(tree1, tree2) {
@@ -227,6 +258,7 @@ module.exports = {
     compareLinkedLists,
     compareRandomLinkedLists,
     convertArrayToBinaryTree,
+    convertBinaryTreeToArray,
     compareBinaryTrees,
     convertBinaryTreeToString,
     createLinkedList,

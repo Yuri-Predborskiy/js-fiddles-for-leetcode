@@ -36,15 +36,10 @@ let preorderTraversal = function(root) {
     return result;
 };
 
-let treeTestCase = new TreeNode(1);
-treeTestCase.left = new TreeNode(4);
-treeTestCase.left.left = new TreeNode(2);
-treeTestCase.right = new TreeNode(3);
-
 let tests = [
     { params: [convertArrayToBinaryTree([1,null,2,3])], ans: [1,2,3] },
     { params: [convertArrayToBinaryTree([3,2,null,null,5,4])], ans:  [3,2,5,4] },
-    { params: [treeTestCase], ans: [1,4,2,3] },
+    { params: [convertArrayToBinaryTree([1,4,2,null,null,null,3])], ans: [1,4,2,3] },
 ];
 
 tests.forEach(test => {
