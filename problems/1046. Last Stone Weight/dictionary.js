@@ -21,7 +21,7 @@ time complexity is O(n^2)
  * @param {number[]} stones
  * @return {number}
  */
-var lastStoneWeight = function(stones) {
+let lastStoneWeight = function(stones) {
     let max = 0, max2 = 0;
     const map = {};
 

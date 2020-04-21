@@ -14,7 +14,7 @@ const {TreeNode, convertArrayToBinaryTree, convertBinaryTreeToArray, compareArra
  * @param {TreeNode} root
  * @return {string}
  */
-var serialize = function(root) {
+let serialize = function(root) {
     const output = [];
     const stack = [];
     const visited = new Set([null]);
@@ -46,7 +46,7 @@ var serialize = function(root) {
  * @param {string} data
  * @return {TreeNode}
  */
-var deserialize = function(data) {
+let deserialize = function(data) {
     function addBranch(root, branch) {
         if (index >= array.length) {
             return;

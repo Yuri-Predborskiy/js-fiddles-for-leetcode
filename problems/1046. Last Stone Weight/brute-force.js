@@ -4,7 +4,7 @@
  * @param {number[]} stones
  * @return {number}
  */
-var lastStoneWeight = function(stones) {
+let lastStoneWeight = function(stones) {
     if (stones.length < 2) {
         return stones[0];
     }

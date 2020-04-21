@@ -29,7 +29,7 @@ Queue.prototype.isEmpty = function() {
 /**
  * Initialize your data structure here.
  */
-var MyStack = function() {
+let MyStack = function() {
     this.queue = new Queue();
 };
 
@@ -87,11 +87,11 @@ MyStack.prototype.empty = function() {
 
 /**
  * Your MyStack object will be instantiated and called as such:
- * var obj = Object.create(MyStack).createNew()
+ * let obj = Object.create(MyStack).createNew()
  * obj.push(x)
- * var param_2 = obj.pop()
- * var param_3 = obj.top()
- * var param_4 = obj.empty()
+ * let param_2 = obj.pop()
+ * let param_3 = obj.top()
+ * let param_4 = obj.empty()
  */
 
 let stack = new MyStack();
