@@ -49,10 +49,3 @@ tests.forEach(test => {
     let correct = res === test.ans;
     console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
 });
-
-/**
- * @param {string} a
- */
-function test(a) {}
-
-test(...['string']);
