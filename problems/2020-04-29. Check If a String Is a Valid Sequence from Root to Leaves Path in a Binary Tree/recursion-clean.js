@@ -6,6 +6,9 @@ If such a path exists, and the last item in the array is also a leaf, return tru
 False when we are at the last index of the array and there is either left or right child
 false when we reached a leaf and it wasn't the last item
 false when we fell off the tree from a leaf before finishing iterating over items in the array
+
+Time complexity: O(n)
+Space complexity: O(1) not counting recursion stack
  */
 
 const {convertArrayToBinaryTree} = require('../helper');
