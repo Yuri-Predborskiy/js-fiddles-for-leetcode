@@ -14,6 +14,20 @@ function compareArraysStrict(left, right) {
     return true;
 }
 
+// compare arrays where order is important
+function compareMatricesStrict(left, right) {
+    if (typeof left !== typeof right || !Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) {
+        return false;
+    }
+
+    for (let i = 0; i < left.length; i++) {
+        if (!compareArraysStrict(left[i], right[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // compare arrays where order does not matter
 function compareArrays(arr1, arr2) {
     if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) {
@@ -249,6 +263,7 @@ function serializeTreeWithRightLink(root) {
 
 module.exports = {
     compareArraysStrict,
+    compareMatricesStrict,
     compareArrays,
     compareNumberArrays,
     ListNode,
