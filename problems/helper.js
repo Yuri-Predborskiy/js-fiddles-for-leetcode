@@ -196,6 +196,9 @@ function TreeNodeWithNext(val) {
 }
 
 function createLinkedList(values) {
+    if (values.length < 1) {
+        return null;
+    }
     let head = new ListNode(values[0]), node = head;
     for (let i = 1; i < values.length; i++) {
         node.next = new ListNode(values[i]);
