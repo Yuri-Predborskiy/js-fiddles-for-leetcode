@@ -1,4 +1,6 @@
 let loggingStateBoolean = false;
+const TreeNode = require('../utils/tree-node');
+const Queue = require('../utils/queue');
 
 // compare arrays where order is important
 function compareArraysStrict(left, right) {
@@ -106,6 +108,31 @@ function convertArrayToBinaryTree(array) {
     return tree;
 }
 
+function convertArrayToBinaryTreeLevelOrderTraversal(array) {
+    const root = new TreeNode(array[0]);
+    const queue = new Queue();
+    let index = 1;
+    queue.enqueue(root);
+    while (!queue.isEmpty()) {
+        const node = queue.dequeue();
+        if (index < array.length) {
+            node.left = array[index] === null ? null : new TreeNode(array[index]);
+            index++;
+        }
+        if (index < array.length) {
+            node.right = array[index] === null ? null : new TreeNode(array[index]);
+            index++;
+        }
+        if (node.left) {
+            queue.enqueue(node.left);
+        }
+        if (node.right) {
+            queue.enqueue(node.right);
+        }
+    }
+    return root;
+}
+
 // preorder traversal
 function convertBinaryTreeToArray(root) {
     const output = [];
@@ -183,11 +210,6 @@ function ListNode(val) {
 function RandomListNode(label) {
     this.label = label;
     this.next = this.random = null;
-}
-
-function TreeNode(val) {
-    this.val = val;
-    this.left = this.right = null;
 }
 
 function TreeNodeWithNext(val) {
@@ -276,6 +298,7 @@ module.exports = {
     compareLinkedLists,
     compareRandomLinkedLists,
     convertArrayToBinaryTree,
+    convertArrayToBinaryTreeLevelOrderTraversal,
     convertBinaryTreeToArray,
     compareBinaryTrees,
     convertBinaryTreeToString,
