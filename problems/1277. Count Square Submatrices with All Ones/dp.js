@@ -60,7 +60,19 @@ const tests = [
                 [1,1,0]
             ]],
         ans: 7
-    },];
+    },
+    {
+        params:
+            [[
+                [0,0,0],
+                [0,1,0],
+                [0,1,0],
+                [1,1,1],
+                [1,1,0]
+            ]],
+        ans: 8
+    },
+];
 
 for (let test of tests) {
     const res = countSquares(...test.params);
