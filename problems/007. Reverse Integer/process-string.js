@@ -66,7 +66,8 @@ let tests = [
     {params: [2147483647], ans: 0},
     {params: [-2147483648], ans: 0},
     {params: [7463847412], ans: 2147483647},
-    {params: [-8463847412], ans: -2147483648},];
+    {params: [-8463847412], ans: -2147483648},
+];
 
 tests.forEach(test => {
     let res = reverse(...test.params);
