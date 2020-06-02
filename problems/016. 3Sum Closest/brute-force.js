@@ -2,7 +2,7 @@
 Find sum of 3 elements of inputs that, when added up, are closest to target among all possible variants
 Brute force: find all possible combinations and return the one closest to target
 
-Time complexity: O(n^2)
+Time complexity: O(n^3)
 Space complexity: O(1)
  */
 
