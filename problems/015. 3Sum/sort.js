@@ -10,7 +10,6 @@ Space complexity: O(n)
 
 const {compareArrays} = require('../helper');
 
-
 /**
  * @param {number[]} nums
  * @return {number[][]}
