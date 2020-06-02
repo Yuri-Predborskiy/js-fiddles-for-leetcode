@@ -1,17 +1,12 @@
 /*
-Convert integer to Roman numbers
-Create a dictionary of Roman numbers
-Take num, if it is divisible by one of the numbers in the dictionary (starting from the biggest), add letter to result
-    and decrease num respectively.
-If num is too small compared to dictionary item, check next dictionary item.
-Repeat till num reaches 0.
-
-This takes care of repeating numerals.
+Convert Roman number to integer
+Use pre-defined dictionary and scan next two letters.
+If this combination exists (4, 9, 40, 90, 400, 900), add respective number to result number.
+If no such combination exists, simply use current item. It should exist in dictionary.
 
 Time complexity: O(n)
 Space complexity: O(1)
  */
-
 
 /**
  * @param {string} s
@@ -46,26 +41,6 @@ let romanToInt = function(s) {
         }
     }
     return num;
-};
-/**
- * @param {number} num
- * @return {string}
- */
-let intToRoman = function(num) {
-
-
-    let remainder = num;
-    let result = '';
-    let index = 0;
-    while (remainder > 0) {
-        if (Math.floor(remainder / dictionary[index]) > 0) {
-            result += dictionary[index + 1];
-            remainder -= dictionary[index];
-        } else {
-            index += 2;
-        }
-    }
-    return result;
 };
 
 let tests = [
