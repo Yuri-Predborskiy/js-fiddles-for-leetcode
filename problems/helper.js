@@ -170,7 +170,7 @@ function compareBinaryTrees(tree1, tree2) {
     return val1 === val2;
 }
 
-function linkedListToString(list, separator = '') {
+function linkedListToString(list, separator = '->') {
     let val = '';
     while (list) {
         val += list.val + separator;
@@ -217,6 +217,11 @@ function TreeNodeWithNext(val) {
     this.left = this.right = this.next = null;
 }
 
+/**
+ * Create linked list from array
+ * @param values
+ * @returns {null|ListNode}
+ */
 function createLinkedList(values) {
     if (values.length < 1) {
         return null;
