@@ -32,7 +32,7 @@ let nextPermutation = function(nums) {
     for (let firstDecreasing = nums.length - 2; firstDecreasing >= 0; firstDecreasing--) {
         if (nums[firstDecreasing] < nums[firstDecreasing + 1]) {
             let nextBiggerIndex = nums.length - 1;
-            while (nextBiggerIndex > firstDecreasing && nums[nextBiggerIndex] <= nums[firstDecreasing]) {
+            while (nums[nextBiggerIndex] <= nums[firstDecreasing]) {
                 nextBiggerIndex--;
             }
             swap(firstDecreasing, nextBiggerIndex);
