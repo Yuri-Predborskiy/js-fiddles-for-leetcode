@@ -19,7 +19,7 @@ const {compareMatricesStrict} = require('../helper');
  * @param {number[][]} B
  * @return {number[][]}
  */
-var intervalIntersection = function(A, B) {
+let intervalIntersection = function(A, B) {
     let aIndex = 0, bIndex = 0;
     const intervals = [];
 
