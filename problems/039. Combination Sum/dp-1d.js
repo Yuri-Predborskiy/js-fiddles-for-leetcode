@@ -32,18 +32,16 @@ let combinationSum = function(candidates, target) {
         const candidate = candidates[num];
         dp[candidate] = dp[candidate] || [];
         for (let sum = candidate; sum <= target; sum++) {
-            const combos = [];
+            dp[sum] = dp[sum] || [];
             if (sum === candidate) {
-                combos.push([candidate]);
+                dp[sum].push([candidate]);
             } else if (Array.isArray(dp[sum - candidate])) {
-                combos.push(...(dp[sum - candidate].map(c => {
+                dp[sum].push(...(dp[sum - candidate].map(c => {
                     const newCombo = c.slice();
                     newCombo.push(candidate);
                     return newCombo;
                 })));
             }
-            dp[sum] = dp[sum] || [];
-            dp[sum].push(...combos);
         }
     }
     return dp[target] || [];
