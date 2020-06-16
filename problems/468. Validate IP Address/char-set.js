@@ -57,15 +57,15 @@ let validIPAddress = function(IP) {
         return true;
     }
     const allowedLetters = new Set(['a','b','c','d','e','f', 'A','B','C','D','E','F']);
-    const digits = new Set(['0','1','2','3','4','5','6','7','8','9'])
+    const digits = new Set(['0','1','2','3','4','5','6','7','8','9']);
 
     if (isIpv4(IP)) {
-        return "IPv4";
+        return 'IPv4';
     }
     if (isIpv6(IP)) {
-        return "IPv6";
+        return 'IPv6';
     }
-    return "Neither";
+    return 'Neither';
 };
 
 let tests = [
