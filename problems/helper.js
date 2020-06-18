@@ -54,6 +54,43 @@ function compareArrays(arr1, arr2) {
     return true;
 }
 
+/**
+ * Check if two matrices consist of identical arrays
+ * @param leftMatrix {[][]}
+ * @param rightMatrix {[][]}
+ * @returns {boolean}
+ */
+function compareMatrices(leftMatrix, rightMatrix) {
+    function indexOfArrayInMatrix(array, matrix) {
+        for (let i = 0; i < matrix.length; i++) {
+            if (compareArrays(array, matrix[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    if (!Array.isArray(leftMatrix) || !Array.isArray(rightMatrix) || leftMatrix.length !== rightMatrix.length) {
+        return false;
+    }
+
+    const usedIndexes = new Set();
+
+    for (const leftArr of leftMatrix) {
+        const index = indexOfArrayInMatrix(leftArr, rightMatrix);
+        if (index === -1) {
+            return false; // left matrix contains array that is not present in right matrix
+        }
+        if (!usedIndexes.has(index)) {
+            usedIndexes.add(index);
+        }
+    }
+
+    // this check may be redundant as we compared left matrix length and right matrix length
+    // return usedIndexes.size === rightMatrix.length;
+    return true;
+}
+
 // compare arrays without sorting, for number arrays
 function compareNumberArrays(arr1, arr2) {
     if (typeof arr1 !== typeof arr2 || !Array.isArray(arr1) || arr1.length !== arr2.length) return false;
@@ -295,6 +332,7 @@ module.exports = {
     compareArraysStrict,
     compareMatricesStrict,
     compareArrays,
+    compareMatrices,
     compareNumberArrays,
     ListNode,
     RandomListNode,
