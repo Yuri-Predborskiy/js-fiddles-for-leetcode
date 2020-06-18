@@ -86,9 +86,7 @@ function compareMatrices(leftMatrix, rightMatrix) {
         }
     }
 
-    // this check may be redundant as we compared left matrix length and right matrix length
-    // return usedIndexes.size === rightMatrix.length;
-    return true;
+    return usedIndexes.size === rightMatrix.length;
 }
 
 // compare arrays without sorting, for number arrays
