@@ -63,7 +63,8 @@ function compareArrays(arr1, arr2) {
 function compareMatrices(leftMatrix, rightMatrix) {
     function indexOfArrayInMatrix(array, matrix) {
         for (let i = 0; i < matrix.length; i++) {
-            if (compareArrays(array, matrix[i])) {
+            if (compareArrays(array, matrix[i]) && !usedIndexes.has(i)) {
+                usedIndexes.add(i);
                 return i;
             }
         }
@@ -80,9 +81,6 @@ function compareMatrices(leftMatrix, rightMatrix) {
         const index = indexOfArrayInMatrix(leftArr, rightMatrix);
         if (index === -1) {
             return false; // left matrix contains array that is not present in right matrix
-        }
-        if (!usedIndexes.has(index)) {
-            usedIndexes.add(index);
         }
     }
 
