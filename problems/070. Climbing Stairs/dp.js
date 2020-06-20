@@ -6,7 +6,7 @@ At each step we move one or two steps down from the top
 If we reached the goal, increment number of ways to reach this step (dp) by 1
 If we stepped too far, do not count
 
-Time complexity: O(2^n)
+Time complexity: O(n) thanks to memoization (we do not re-calculate steps)
 Space complexity: O(n)
  */
 
