@@ -142,6 +142,9 @@ function convertArrayToBinaryTree(array) {
 }
 
 function convertArrayToBinaryTreeLevelOrderTraversal(array) {
+    if (!Array.isArray(array) || array.length < 1) {
+        return null;
+    }
     const root = new TreeNode(array[0]);
     const queue = new Queue();
     let index = 1;
