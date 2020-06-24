@@ -29,7 +29,11 @@ let numTrees = function(n) {
 };
 
 let tests = [
+    {params: [1], ans: 1},
+    {params: [2], ans: 2},
     {params: [3], ans: 5},
+    {params: [4], ans: 14},
+    {params: [5], ans: 42},
 ];
 
 tests.forEach(test => {
