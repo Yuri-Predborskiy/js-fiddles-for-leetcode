@@ -31,11 +31,11 @@ let simplifyPath = function(path) {
 
 let tests = [
     {params: ['/home/'], ans: '/home'},
-    { params: ['/a//b////c/d//././/..'], ans: '/a/b/c' },
-    { params: ['/a/../../b/../c//.//'], ans: '/c' },
-    { params: ['/a/./b/../../c/'], ans: '/c' },
-    { params: ['/home//foo/'], ans: '/home/foo' },
-    { params: ['/../'], ans: '/' },
+    {params: ['/a//b////c/d//././/..'], ans: '/a/b/c'},
+    {params: ['/a/../../b/../c//.//'], ans: '/c'},
+    {params: ['/a/./b/../../c/'], ans: '/c'},
+    {params: ['/home//foo/'], ans: '/home/foo'},
+    {params: ['/../'], ans: '/'},
 ];
 
 tests.forEach(test => {
