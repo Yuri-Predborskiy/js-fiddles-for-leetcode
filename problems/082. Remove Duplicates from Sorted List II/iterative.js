@@ -1,3 +1,18 @@
+/*
+Delete *all* duplicate values from sorted singly linked list
+
+Solution using iterative scan of the linked list
+Look at previous and next value, if either matches the current value, continue
+We want a value that is unique, or is null
+
+Potential improvement: make function that does one thing - looks at previous value or next value only
+    then look at the other value in the main loop or another function
+Alternative: same solution using recursion
+
+Time complexity: O(n)
+Space complexity: O(1)
+ */
+
 const {
     createLinkedList,
     linkedListToArray,
