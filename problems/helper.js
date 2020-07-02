@@ -228,6 +228,16 @@ function linkedListToString(list, separator = '->') {
     return val.substring(0, val.length - separator.length);
 }
 
+function linkedListToArray(head) {
+    let arr = [];
+    let node = head;
+    while (node) {
+        arr.push(node.val);
+        node = node.next;
+    }
+    return arr;
+}
+
 function randomLinkedListToString(list, separator = '') {
     let label = '';
     while (list) {
@@ -361,6 +371,7 @@ module.exports = {
     createLinkedList,
     createRandomLinkedList,
     linkedListToString,
+    linkedListToArray,
     randomLinkedListToString,
     linkedListToStringBack,
     reducerArraySum,
