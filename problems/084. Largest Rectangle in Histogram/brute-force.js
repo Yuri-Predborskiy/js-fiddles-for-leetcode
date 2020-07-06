@@ -17,7 +17,6 @@ Space complexity: O(1)
  * @return {number}
  */
 let largestRectangleArea = function(heights) {
-    //starting at each point, check min height at each point, keep track of max
     let max = 0;
     for (let i = 0; i < heights.length; i++) {
         let minHeight = Infinity;
@@ -37,6 +36,8 @@ let tests = [
     {params: [2,0,5,6,2,3], ans: 10},
     {params: [2,1,5,6,2,12], ans: 12},
     {params: [0,1,0], ans: 1},
+    {params: [0,1,0,2,1,1,0,1], ans: 3},
+    {params: [0,1,0,3,2,0,5], ans: 5},
 ];
 
 
