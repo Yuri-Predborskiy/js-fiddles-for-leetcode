@@ -1,6 +1,7 @@
 let loggingStateBoolean = false;
 const TreeNode = require('../utils/tree-node');
 const Queue = require('../utils/queue');
+const DoublyLinkedListWithChild = require('../utils/doubly-linked-list-with-child');
 
 // compare arrays where order is important
 function compareArraysStrict(left, right) {
@@ -302,6 +303,35 @@ function createRandomLinkedList(values) {
     return head;
 }
 
+/**
+ * Create a doubly linked list with child node, where child is a separate linked list
+ * @param items {[]}    Array of items to be converted into linked list node values
+ * @param [startIndex] {number}  start index, default is 0
+ */
+function createMultiLevelLinkedList(items, startIndex = 0) {
+    if (startIndex >= items.length) {
+        return null;
+    }
+
+    const list = new DoublyLinkedListWithChild();
+    let index = startIndex;
+
+    while (items[index] !== null && index < items.length) {
+        list.addAtTail(items[index]);
+        index++;
+    }
+    let node = list.getAtHead();
+    index++;
+    while (items[index] === null) {
+        node = node.next;
+        index++;
+    }
+    if (index < items.length) {
+        node.child = createMultiLevelLinkedList(items, index);
+    }
+    return list.getAtHead();
+}
+
 function reducerArraySum(accumulator, currentValue) {
     return accumulator + currentValue;
 }
@@ -370,6 +400,7 @@ module.exports = {
     convertBinaryTreeToString,
     createLinkedList,
     createRandomLinkedList,
+    createMultiLevelLinkedList,
     linkedListToString,
     linkedListToArray,
     randomLinkedListToString,
