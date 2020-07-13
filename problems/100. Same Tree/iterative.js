@@ -1,19 +1,16 @@
 /*
 Check if two trees have the same structure and values
 
-Recursive solution
-Check if both roots exists.
-If neither root exists - return true.
-If both exist and values are different - return false.
-If only one of the roots exists - return false.
-The recursively perform the same check for left tree and right tree
-
-Due to execution order, this is a depth-first search algorithm
+Iterative solution
+If both roots exist - compare their nodes and branches.
+If only one root exists - return false.
+If values are not identical - return false.
+Perform iterative DFS on branches using stack (implemented via array)
 
 Time complexity: O(n)
-Space complexity: O(1) outside of recursion stack
-    Average recursion stack for a balanced binary tree - O(log(n))
-    Worst case: O(n) for unbalanced tree since we may have half of all nodes in stack (all left branches)
+Space complexity: O(log(n)) average, O(n/2) = O(n) worst case
+    If all the right branches have a left leaf, and no other branches exist.
+    In this case we'll have around half of the tree in stack, O(n/2) = O(n) space complexity
  */
 
 const {convertArrayToBinaryTreeLevelOrderTraversal} = require('../helper');
@@ -32,15 +29,19 @@ const {convertArrayToBinaryTreeLevelOrderTraversal} = require('../helper');
  * @return {boolean}
  */
 let isSameTree = function(p, q) {
-    if (!p && !q) {
-        return true;
-    } else if (p && q) {
-        if (p.val !== q.val) {
+    const stack = [[p, q]];
+    while (stack.length > 0) {
+        const [leftNode, rightNode] = stack.pop();
+        if (leftNode && rightNode) {
+            if (leftNode.val !== rightNode.val) {
+                return false;
+            }
+            stack.push([leftNode.left, rightNode.left], [leftNode.right, rightNode.right]);
+        } else if (leftNode || rightNode) {
             return false;
-        }
-        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        } // else = !leftNode, !rightNode - do nothing
     }
-    return false;
+    return true;
 };
 
 let tests = [
