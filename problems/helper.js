@@ -214,6 +214,29 @@ function convertBinaryTreeToArray(root) {
     return output;
 }
 
+function flattenBinaryTreeLevelOrderTraversal(root) {
+    const output = [];
+    if (!root) return output;
+    let level = [root];
+    while (level.length > 0) {
+        const children = [];
+        for (const node of level) {
+            if (node && (node.left || node.right)) {
+                children.push(node.left);
+                children.push(node.right);
+            }
+            output.push(node ? node.val : null);
+        }
+        level = children;
+    }
+    let item = output.pop();
+    while (!item) {
+        item = output.pop();
+    }
+    output.push(item);
+    return output;
+}
+
 function compareBinaryTrees(tree1, tree2) {
     let val1 = convertBinaryTreeToString(tree1);
     let val2 = convertBinaryTreeToString(tree2);
@@ -398,6 +421,7 @@ module.exports = {
     convertBinaryTreeToArray,
     compareBinaryTrees,
     convertBinaryTreeToString,
+    flattenBinaryTreeLevelOrderTraversal,
     createLinkedList,
     createRandomLinkedList,
     createMultiLevelLinkedList,
