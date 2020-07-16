@@ -221,7 +221,7 @@ function flattenBinaryTreeLevelOrderTraversal(root) {
     while (level.length > 0) {
         const children = [];
         for (const node of level) {
-            if (node && (node.left || node.right)) {
+            if (node) {
                 children.push(node.left);
                 children.push(node.right);
             }
