@@ -1,8 +1,3 @@
-const _ = require('lodash');
-const helper = require('../helper');
-const LOGGING = true;
-helper.log = _.partial(helper.log, LOGGING);
-
 /*
     Optimized brute-force approach:
     check if array can be broken into m pieces no larger than pre-calculated sum. if not, increase sum

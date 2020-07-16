@@ -1,7 +1,5 @@
-const _ = require('lodash');
 const helper = require('../helper');
-const LOGGING = true;
-helper.log = _.partial(helper.log, LOGGING);
+const LOGGING = false;
 
 /*
     The brute force approach:
@@ -39,7 +37,7 @@ let splitArray = function(nums, m) {
         }
 
         // reset later starts after updating an earlier start
-        if (lastUpdatedIndex !==0 && lastUpdatedIndex < starts.length - 1) {
+        if (lastUpdatedIndex < starts.length - 1) {
             let next = starts[lastUpdatedIndex] + 1;
             for (let i = lastUpdatedIndex + 1; i < starts.length; i++) {
                 starts[i] = next++;
@@ -48,7 +46,7 @@ let splitArray = function(nums, m) {
     }
 
     if (m === 1) {
-        return nums.reduce(helper.reducerArraySum);
+        return nums.reduce((acc, val) => acc + val);
     }
     if (m === nums.length) {
         return getMaxItem();
@@ -76,17 +74,17 @@ let splitArray = function(nums, m) {
         }
         if (minSum > maxSubSum) {
             minSum = maxSubSum;
-            helper.log(`new best minSum is ${minSum}, groups:`);
-            helper.log(groups);
+            helper.log(LOGGING, `new best minSum is ${minSum}, groups:`);
+            helper.log(LOGGING, groups);
         } else {
-            helper.log('sub-optimal grouping with minSum', maxSubSum, 'groups:');
-            helper.log(groups);
+            helper.log(LOGGING, 'sub-optimal grouping with minSum', maxSubSum, 'groups:');
+            helper.log(LOGGING, groups);
         }
         maxSubSum = 0;
         updateNextStart();
     }
 
-    helper.log('ending starts', starts);
+    helper.log(LOGGING, 'ending starts', starts);
     return minSum;
 };
 
