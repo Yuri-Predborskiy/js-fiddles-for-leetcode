@@ -1,4 +1,4 @@
-const {ListNode, createLinkedList, compareLinkedLists} = require('../helper');
+const {ListNode, createLinkedList, linkedListToString} = require('../helper');
 
 /**
  * @param {ListNode} head
@@ -29,17 +29,13 @@ let removeElements = function(head, val) {
     return head;
 };
 
-let list = createLinkedList([1,8,2,8,3,8,4,8,5]);
-let short = createLinkedList([1,2,3,4,5]);
-let oneItem = createLinkedList([1]);
-
 let tests = [
-    { head: list, val: 8, ans: short },
-    { head: oneItem, val: 1, ans: null },
+    {params: [createLinkedList([1,2,6,3,4,5,6]), 6], ans: [1,2,3,4,5].join('->')},
+    {params: [createLinkedList([1]), 1], ans: [].join('->')},
 ];
 
 tests.forEach(test => {
-    let res = removeElements(test.head, test.val);
-    let correct = compareLinkedLists(res, test.ans);
+    let res = linkedListToString(removeElements(...test.params));
+    let correct = res === test.ans;
     console.log('expected:', test.ans, '| calculated:', res, '| result is', correct ? 'CORRECT' : 'WRONG!');
 });
