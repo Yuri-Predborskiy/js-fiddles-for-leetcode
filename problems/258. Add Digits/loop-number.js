@@ -2,11 +2,13 @@
 Add digits till you have a root number
 
 Loop-based solution
-Convert number to string, split it into individual numbers
-Add numbers
-If result is more than 10, repeat
+Combine all digits in a number:
+    calculate modulo from deleting by 10
+    delete remaining number by 10
+    add up modulo from each operation and assign it to num
+Repeat till num is less or equal to 10
 
-Time complexity: O(n)
+Time complexity: O(log(n)) where n - input number
 Space complexity: O(1)
  */
 
@@ -15,10 +17,14 @@ Space complexity: O(1)
  * @return {number}
  */
 let addDigits = function(num) {
-    let numsArray = ('' + num).split('');
-    while (numsArray.length > 1) {
-        num = numsArray.reduce((acc, x) => + x + acc, 0);
-        numsArray = ('' + num).split('');
+    while (num >= 10) {
+        let number = num;
+        num = 0;
+        while (number > 0) {
+            let fraction = number % 10;
+            num += fraction;
+            number = (number - fraction) / 10;
+        }
     }
     return num;
 };
