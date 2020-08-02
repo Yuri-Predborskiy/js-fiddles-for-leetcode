@@ -46,17 +46,26 @@ MyHashSet.prototype.contains = function(key) {
  * let param_3 = obj.contains(key)
  */
 
-function check(calculated, checkValue) {
-    let res = checkValue === calculated ? 'CORRECT' : 'WRONG!';
-    console.log('should be', checkValue, '| calculated', calculated, '| result is', res);
-}
+const tests = [
+    {
+        inputs: [
+            ["MyHashSet","add","add","contains","contains","add","contains","remove","contains"],
+            [[],[1],[2],[1],[3],[2],[2],[2],[2]]
+        ],
+        outputs: [null,null,null,true,false,null,true,null,false]
+    },
+];
 
-let hashSet = new MyHashSet();
-hashSet.add(1);
-hashSet.add(2);
-check(hashSet.contains(1), true);
-check(hashSet.contains(3), false);
-hashSet.add(2);
-check(hashSet.contains(2), true);
-hashSet.remove(2);
-check(hashSet.contains(2), false);
+for (let test of tests) {
+    const executor = new MyHashSet(test.inputs[1][0]);
+    for (let i = 1; i < test.inputs[0].length; i++) {
+        let output = executor[test.inputs[0][i]](...test.inputs[1][i]);
+        if (typeof output === 'undefined') {
+            // LeetCode matches "undefined" output to "null"
+            output = null;
+        }
+        const success = output === test.outputs[i];
+        console.log(`Test ${i}: ${success ? 'SUCCESS' : 'FAILURE'}. Expected ${test.outputs[i]} to equal ${output}`);
+    }
+}
+console.log('all done');
