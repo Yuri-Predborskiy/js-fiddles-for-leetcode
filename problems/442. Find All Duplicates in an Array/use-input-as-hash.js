@@ -2,12 +2,14 @@
 Find all duplicates in an array
 Array contains numbers, some appear once, others appear twice. Find those that appear twice
 
-Solution using sorting
-Sort the array
-If any item is the same as previous item, add it to results
+Solution using input as hash (destroys input!)
+Use input array as a hash table
+Since numbers are from 1 to n (where n - length of the array), we can input array as a hash table
+If element at nums[math.abs(element)] is not negative, make it negative
+Otherwise, add current element to results
 
-Time complexity: O(n*log(n)) sorting
-Space complexity: O(1)
+Time complexity: O(n)
+Space complexity: O(1) (not counting memory for result)
  */
 
 const {compareArraysStrict} = require('../helper');
@@ -17,12 +19,13 @@ const {compareArraysStrict} = require('../helper');
  * @return {number[]}
  */
 let findDuplicates = function(nums) {
-    nums.sort((a, b) => a - b);
     const results = [];
-    for (let i = 1; i < nums.length; i++) {
-        if (nums[i - 1] === nums[i]) {
-            results.push(nums[i]);
-            i++;
+    for (let i = 0; i < nums.length; i++) {
+        const index = Math.abs(nums[i]);
+        if (nums[index - 1] < 0) {
+            results.push(index);
+        } else {
+            nums[index - 1] *= -1;
         }
     }
     return results;

@@ -30,6 +30,7 @@ let findDuplicates = function(nums) {
 };
 
 let tests = [
+    {params: [[2,2]], ans: [2]},
     {params: [[4,3,2,7,8,2,3,1]], ans: [2,3]},
 ];
 
