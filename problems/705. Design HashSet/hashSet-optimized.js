@@ -1,8 +1,23 @@
+/*
+Create a hash set data structure
+
+Since the values we want to hash are numbers from 0 to 1.000.000
+    we can store them in an array of arrays
+The first array contains 1000 buckets, each of which contains 1000 items
+This allows us to avoid having a huge array with a million items
+
+Optimization: pre-define size of the new array when creating it
+This way we avoid having to resize the array after it was created
+
+Time complexity: O(1), add, get, delete are all O(1) operations
+Space complexity: O(n) in the worst case we store all elements we can
+ */
+
 /**
  * Initialize your data structure here.
  */
 let MyHashSet = function() {
-    this.values = {};
+    this.buckets = new Array(1000);
 };
 
 /**
@@ -10,7 +25,12 @@ let MyHashSet = function() {
  * @return {void}
  */
 MyHashSet.prototype.add = function(key) {
-    this.values[key] = true;
+    let bucket = Math.floor(key / 1000);
+    let value = key % 1000;
+    if (!this.buckets[bucket]) {
+        this.buckets[bucket] = new Array(1000);
+    }
+    this.buckets[bucket][value] = true;
 };
 
 /**
@@ -18,7 +38,12 @@ MyHashSet.prototype.add = function(key) {
  * @return {void}
  */
 MyHashSet.prototype.remove = function(key) {
-    this.values[key] = false;
+    let bucket = Math.floor(key / 1000);
+    let value = key % 1000;
+    if (!this.buckets[bucket]) {
+        return;
+    }
+    this.buckets[bucket][value] = false;
 };
 
 /**
@@ -27,7 +52,9 @@ MyHashSet.prototype.remove = function(key) {
  * @return {boolean}
  */
 MyHashSet.prototype.contains = function(key) {
-    return this.values[key] || false;
+    let bucket = Math.floor(key / 1000);
+    let value = key % 1000;
+    return this.buckets[bucket] ? this.buckets[bucket][value] || false : false;
 };
 
 /**

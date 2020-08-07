@@ -24,15 +24,16 @@ let addBinary = function(a, b) {
 };
 
 let tests = [
-    { a: '11', b: '11', ans: '110' },
-    { a: '0', b: '1', ans: '1' },
-    { a: '10', b: '1', ans: '11' },
-    { a: '11', b: '1', ans: '100' },
-    { a: '1010', b: '1', ans: '1011' },
-    { a: '1010', b: '1011', ans: '10101' },
+    {params: ['11', '11'], ans: '110'},
+    {params: ['0', '1'], ans: '1'},
+    {params: ['10', '1'], ans: '11'},
+    {params: ['1010', '1'], ans: '1011'},
+    {params: ['1010', '1011'], ans: '10101'},
+    {params: ['11', '11'], ans: '110'},
 ];
 
 tests.forEach(test => {
-    let res = addBinary(test.a, test.b);
-    console.log('expected:', test.ans, '| calculated:', res, '| result is', res === test.ans ? 'CORRECT' : 'WRONG!');
+    let res = addBinary(...test.params);
+    let correct = res === test.ans;
+    console.log(`expected: '${test.ans}' | calculated: '${res}' | result is`, correct ? 'CORRECT' : 'WRONG!');
 });

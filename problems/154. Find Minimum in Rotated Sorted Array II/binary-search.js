@@ -1,3 +1,14 @@
+/*
+Find smallest element in sorted rotated array that can contain duplicates
+
+Use binary search algorithm to exclude parts of the input that are sorted
+The whole idea: search till you have two elements left (left and right) and return smaller one
+When mid = right, decrement right by one
+
+Time complexity: O(log(n)) average, O(n) worst case
+Space complexity: O(1)
+ */
+
 /**
  * @param {number[]} nums
  * @return {number}
